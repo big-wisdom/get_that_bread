@@ -1,0 +1,46 @@
+import 'package:flutter/material.dart';
+import 'package:get_that_bread/routes/menus/menus.dart';
+import 'package:get_that_bread/routes/shoppingList/shoppingList.dart';
+
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int _selectedIndex = 0;
+
+  static List<Widget> _widgetOptions = <Widget>[
+    Menus(),
+    ShoppingList()
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard),
+            title: Text("Menus"),
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              title: Text("Shopping List")
+          )
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+}

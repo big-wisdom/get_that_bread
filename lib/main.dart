@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_that_bread/routes/home.dart';
 
 void main() {
   runApp(GetThatBread());
@@ -18,14 +19,4 @@ class GetThatBread extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Get That Bread"),
-      ),
-      body: Center(child: Text("Here we go!")),
-    );
-  }
-}
+
