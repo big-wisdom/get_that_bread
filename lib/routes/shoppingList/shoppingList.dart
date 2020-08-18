@@ -9,14 +9,38 @@ class ShoppingList extends StatelessWidget {
         title: Text("Shopping List"),
       ),
       body: Center(
-        child: ListView(children: <Widget>[
-          Card(
-            child: ListTile(
+        child: ListView(
+          children: <Widget>[
+            Card(
+              child: ListTile(
                 leading: Icon(Icons.texture),
                 title: Text("Eggs"),
-                trailing: Counter()),
-          ),
-        ]),
+                trailing: Counter(),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.texture),
+                title: Text("Eggs"),
+                trailing: Counter(),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.texture),
+                title: Text("Eggs"),
+                trailing: Counter(),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.texture),
+                title: Text("Eggs"),
+                trailing: Counter(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
