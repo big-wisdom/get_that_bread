@@ -23,12 +23,10 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
 
   @override
   void initState() {
-
     _ingredients = [];
     if (widget._dish != null) {
       _selectedIngredients = widget._dish.ingredients;
     }
-
 
     super.initState();
   }
@@ -42,58 +40,61 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
       appBar: AppBar(
         title: Text("Search Ingredients"),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: ("Search here fool"),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(4.0))),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: ("Search here fool"),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(4.0))),
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  ..._ingredients
-                      .map((ingredient) => Card(
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 4.0),
-                          child: ListTile(
-                            title: Text(ingredient.name),
-                            trailing: Counter(),
-                          )))
-                      .toList(),
-                ],
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    ..._ingredients
+                        .map((ingredient) => Card(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 16.0, vertical: 4.0),
+                            child: ListTile(
+                              title: Text(ingredient.name),
+                              trailing: Counter(),
+                            )))
+                        .toList(),
+                  ],
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: RaisedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => new EditIngredientsScreen()),
-                );
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.add),
-                  Text("Add Ingredient"),
-                ],
-              ),
+            ButtonBar(
+              alignment: MainAxisAlignment.center,
+              children: [
+                RaisedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => new EditIngredientsScreen()),
+                    );
+                  },
+                  label: Text("Add Ingredient"),
+                  icon: Icon(Icons.add),
+                ),
+                RaisedButton(
+                  onPressed: () {},
+                  child: Text("Save Ingredients"),
+                ),
+              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
