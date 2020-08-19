@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
+import 'package:get_that_bread/routes/dish/edit_dish_screen.dart';
 import 'package:get_that_bread/routes/menus/widgets/dish_card.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
 import 'package:provider/provider.dart';
@@ -139,6 +140,18 @@ class _EditMenusScreenState extends State<EditMenusScreen> {
                             .toList(),
                       ],
                     ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: RaisedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditDishScreen()));
+                },
+                child: Text('Create Dish'),
+              ),
             ),
             Padding(
               padding: EdgeInsets.all(16.0),
