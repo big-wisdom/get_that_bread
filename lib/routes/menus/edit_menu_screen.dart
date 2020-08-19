@@ -6,20 +6,37 @@ import 'package:get_that_bread/routes/menus/widgets/dish_card.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
 import 'package:provider/provider.dart';
 
-class EditMenusScreen extends StatefulWidget {
+class EditMenuScreen extends StatefulWidget {
+  final Menu _menu;
+
+  EditMenuScreen([this._menu]);
+
   @override
   _EditMenusScreenState createState() => _EditMenusScreenState();
 }
 
-class _EditMenusScreenState extends State<EditMenusScreen> {
+enum Status { creating, editing }
+
+class _EditMenusScreenState extends State<EditMenuScreen> {
   final _formKey = GlobalKey<FormState>();
   List<Dish> _dishes;
-  List<Dish> _selectedDishes = [];
+  List<Dish> _selectedDishes;
   TextEditingController _menuNameController;
+  Status status;
 
   @override
   void initState() {
-    _menuNameController = new TextEditingController(text: "New Menu");
+    _menuNameController = new TextEditingController();
+
+    if (widget._menu == null) {
+      status = Status.creating;
+      _selectedDishes = [];
+    } else {
+      status = Status.editing;
+      _selectedDishes = widget._menu.dishes;
+      _menuNameController.text = widget._menu.name;
+    }
+
     super.initState();
   }
 
@@ -63,7 +80,10 @@ class _EditMenusScreenState extends State<EditMenusScreen> {
     DataService dataService = Provider.of<DataService>(context);
     _dishes = dataService.dishes;
     return Scaffold(
-      appBar: AppBar(title: Text("Create New Menu")),
+      appBar: AppBar(
+          title: (status == Status.creating)
+              ? Text("Create New Menu")
+              : Text("Edit Menu")),
       body: Form(
         key: _formKey,
         child: Column(
