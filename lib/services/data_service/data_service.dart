@@ -10,13 +10,24 @@ class DataService {
   List<Menu> menus = [];
   List<Dish> dishes = [];
   List<Ingredient> ingredients = [];
+  List<Ingredient> shoppingList = [];
 
   DataService() {
     _loadEverything();
   }
 
   void populateShoppingList() {
+    // Eventually pass the menu to work from to this method
     print("Populating Shopping List");
+    Menu menu = menus[0];
+    for (int dish = 0; dish < menu.dishes.length; dish++) {
+      Dish currentDish = menu.dishes[dish];
+      for (int ingredient = 0;
+          ingredient < currentDish.ingredients.length;
+          ingredient++) {
+        shoppingList.add(currentDish.ingredients[ingredient]);
+      }
+    }
   }
 
   void _loadEverything() {

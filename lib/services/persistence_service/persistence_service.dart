@@ -56,7 +56,7 @@ class PersistenceService {
     if (await file.exists()) {
       return file;
     } else {
-      print("Doesn't Exist");
+      print("JSON File Doesn't Exist, creating it");
       file.writeAsStringSync("{}");
       return file;
     }
