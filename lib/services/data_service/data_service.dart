@@ -112,12 +112,14 @@ class DataService extends ChangeNotifier {
       if (!ingredients.contains(ingredient)) addIngredient(ingredient);
     }
     _persistenceService.encodeDishes(dishes);
+    notifyListeners();
   }
 
   void addIngredient(Ingredient ingredient) {
     print("Adding Ingredient");
     ingredients.add(ingredient);
     _persistenceService.encodeIngredients(ingredients);
+    notifyListeners();
   }
 
   void addToShoppingList(Ingredient ingredient) {

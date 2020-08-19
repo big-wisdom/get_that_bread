@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/routes/ingredients/search_ingredients_screen.dart';
+import 'package:get_that_bread/services/data_service/data_service.dart';
+import 'package:provider/provider.dart';
 
 class EditDishScreen extends StatefulWidget {
   final Dish _dish;
@@ -54,8 +56,14 @@ class _EditDishScreenState extends State<EditDishScreen> {
     });
   }
 
+  Dish _createDish() {
+    return Dish(_dishNameController.text, _dishDescriptionController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
+    DataService dataService = Provider.of<DataService>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: (status == Status.creating)
@@ -99,8 +107,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
               if (status == Status.editing)
                 ...widget._dish.ingredients
                     .map(
-                      (ingredient) =>
-                      Card(
+                      (ingredient) => Card(
                         child: ListTile(
                           title: Text(ingredient.toString()),
                           trailing: IconButton(
@@ -109,7 +116,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
                           ),
                         ),
                       ),
-                )
+                    )
                     .toList(),
               FlatButton(
                 onPressed: () {
@@ -134,6 +141,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
                     if (_formKey.currentState.validate()) {
                       Navigator.pop(context);
                     }
+                    dataService.addDish(_createDish());
                   },
                   child: Text('Save Dish'),
                 ),
