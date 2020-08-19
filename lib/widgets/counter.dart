@@ -51,6 +51,10 @@ class _CounterState extends State<Counter> {
     });
   }
 
+  int getCount() {
+    return _counter;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
