@@ -80,10 +80,11 @@ class _MenuState extends State<MenusScreen> {
                     Divider(),
                     ...menu.dishes
                         .map(
-                          (dish) => ListTile(
-                              title: Text(dish.name),
+                          (dishWrapper) => ListTile(
+                              title: Text(dishWrapper.dish.name),
                               trailing: Counter(),
-                              onTap: () => _showDishDetails(context, dish)),
+                              onTap: () =>
+                                  _showDishDetails(context, dishWrapper.dish)),
                         )
                         .toList(),
                   ],
