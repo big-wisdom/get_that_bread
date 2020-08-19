@@ -5,7 +5,7 @@ import 'package:get_that_bread/services/persistence_service/persistence_service.
 
 // this will control a list of Menus, list of Dishes, and list of Ingredients
 class DataService {
-  final PersistenceService persistenceService = PersistenceService();
+  final PersistenceService _persistenceService = PersistenceService();
   List<Menu> menus = [];
   List<Dish> dishes = [];
   List<Ingredient> ingredients = [];
@@ -21,19 +21,19 @@ class DataService {
   }
 
   void _loadMenus() {
-    persistenceService.decodeMenus().then((value) {
+    _persistenceService.decodeMenus().then((value) {
       menus = value.map((e) => Menu.fromJson(e));
     });
   }
 
   void _loadDishes() {
-    persistenceService.decodeDishes().then((value) {
+    _persistenceService.decodeDishes().then((value) {
       dishes = value.map((e) => Dish.fromJson(e));
     });
   }
 
   void _loadIngredients() {
-    persistenceService.decodeIngredients().then((value) {
+    _persistenceService.decodeIngredients().then((value) {
       ingredients = value.map((e) => Ingredient.fromJson(e));
     });
   }
@@ -65,18 +65,36 @@ class DataService {
   void addMenu(Menu menu) {
     print("Adding Menu");
     menus.add(menu);
-    persistenceService.encodeMenus(menus);
+    _persistenceService.encodeMenus(menus);
   }
 
   void addDish(Dish dish) {
     print("Adding Dish");
     dishes.add(dish);
-    persistenceService.encodeDishes(dishes);
+    _persistenceService.encodeDishes(dishes);
   }
 
   void addIngredient(Ingredient ingredient) {
     print("Adding Ingredient");
     ingredients.add(ingredient);
-    persistenceService.encodeIngredients(ingredients);
+    _persistenceService.encodeIngredients(ingredients);
+  }
+
+  void removeMenu(Menu menu) {
+    print("Removing Menu");
+    menus.remove(menu);
+    _persistenceService.encodeMenus(menus);
+  }
+
+  void removeDish(Dish dish) {
+    print("Removing Dish");
+    dishes.remove(dish);
+    _persistenceService.encodeDishes(dishes);
+  }
+
+  void removeIngredient(Ingredient ingredient) {
+    print("Removing Ingredient");
+    ingredients.remove(ingredient);
+    _persistenceService.encodeIngredients(ingredients);
   }
 }
