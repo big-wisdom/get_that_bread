@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
+import 'package:get_that_bread/routes/menus/edit_menus_screen.dart';
 import 'package:get_that_bread/routes/menus/widgets/dish_card.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +71,18 @@ class _MenuState extends State<MenusScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => new EditMenusScreen()),
+                MaterialPageRoute(
+                  builder: (context) => new EditMenusScreen(
+                    dataService,
+                    (menu) {
+                      setState(
+                        () {
+                          dataService.addMenu(menu);
+                        },
+                      );
+                    },
+                  ),
+                ),
               );
             },
             child: Row(

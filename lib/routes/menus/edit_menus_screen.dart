@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:get_that_bread/routes/menus/widgets/dish.dart';
+import 'package:get_that_bread/model/dish/dish.dart';
+import 'package:get_that_bread/model/menu/menu.dart';
 import 'package:get_that_bread/routes/menus/widgets/dish_card.dart';
-import 'package:get_that_bread/routes/menus/widgets/menu.dart';
+import 'package:get_that_bread/services/data_service/data_service.dart';
+import 'package:provider/provider.dart';
 
 class EditMenusScreen extends StatefulWidget {
   final Menu _menu;
+  final DataService dataService;
+  final Function(Menu menu) addMenu;
 
-  EditMenusScreen([
+  EditMenusScreen(
+    this.dataService,
+    this.addMenu, [
     this._menu,
   ]);
 
@@ -16,7 +22,7 @@ class EditMenusScreen extends StatefulWidget {
 
 class _EditMenusScreenState extends State<EditMenusScreen> {
   final _formKey = GlobalKey<FormState>();
-  List<Dish> _dishes = generateDishes(15);
+  List<Dish> _dishes;
   List<Dish> _selectedDishes = [];
   TextEditingController _menuNameController;
 
@@ -53,8 +59,17 @@ class _EditMenusScreenState extends State<EditMenusScreen> {
     });
   }
 
+  Menu _createMenu() {
+    Menu myMenu = Menu(_menuNameController.text);
+    for (Dish myDish in _selectedDishes) {
+      myMenu.addDish(myDish);
+    }
+    return myMenu;
+  }
+
   @override
   Widget build(BuildContext context) {
+    _dishes = widget.dataService.dishes;
     return Scaffold(
       appBar: AppBar(title: Text("Create New Menu")),
       body: Form(
@@ -81,44 +96,49 @@ class _EditMenusScreenState extends State<EditMenusScreen> {
               child: Text("Dishes", style: TextStyle(fontSize: 24.0)),
             ),
             Expanded(
-              child: GridView.extent(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                shrinkWrap: true,
-                maxCrossAxisExtent: 200.0,
-                children: [
-                  ..._dishes
-                      .map(
-                        (dish) => Card(
-                          color: (_selectedDishes.contains(dish)) ? Colors.lightBlueAccent : Colors.white,
-                          child: InkWell(
-                            onTap: () => _toggleDish(dish),
-                            onLongPress: () => _showDishDetails(context, dish),
-                            child: Padding(
-                              padding: EdgeInsets.all(16.0),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(bottom: 8.0),
-                                    child: Text(
-                                      dish.name,
-                                      style: TextStyle(fontSize: 18.0),
+              child: _dishes.isEmpty
+                  ? Center(child: Text("You Have No Dishes Yet!"))
+                  : GridView.extent(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      shrinkWrap: true,
+                      maxCrossAxisExtent: 200.0,
+                      children: [
+                        ..._dishes
+                            .map(
+                              (dish) => Card(
+                                color: (_selectedDishes.contains(dish))
+                                    ? Colors.lightBlueAccent
+                                    : Colors.white,
+                                child: InkWell(
+                                  onTap: () => _toggleDish(dish),
+                                  onLongPress: () =>
+                                      _showDishDetails(context, dish),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(bottom: 8.0),
+                                          child: Text(
+                                            dish.name,
+                                            style: TextStyle(fontSize: 18.0),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            dish.description,
+                                            overflow: TextOverflow.fade,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Expanded(
-                                    child: Text(
-                                      dish.description,
-                                      overflow: TextOverflow.fade,
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ],
-              ),
+                            )
+                            .toList(),
+                      ],
+                    ),
             ),
             Padding(
               padding: EdgeInsets.all(16.0),
@@ -127,6 +147,7 @@ class _EditMenusScreenState extends State<EditMenusScreen> {
                   if (_formKey.currentState.validate()) {
                     Navigator.pop(context);
                   }
+                  widget.addMenu(_createMenu());
                 },
                 child: Text('Save Menu'),
               ),
