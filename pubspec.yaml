@@ -23,11 +23,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  json_annotation: 3.0.1
-  path_provider: 1.6.11
-  uuid: 2.2.0
   flutter_typeahead: ^1.8.8
   fuzzy: 0.2.3
+  json_annotation: 3.0.1
+  path_provider: 1.6.11
+  provider: ^4.3.2
+  uuid: 2.2.0
+
 
 
 

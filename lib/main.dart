@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_that_bread/routes/home.dart';
+import 'package:get_that_bread/services/data_service/data_service.dart';
 
 void main() {
   runApp(GetThatBread());
@@ -14,7 +15,7 @@ class GetThatBread extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Home(),
+      home: Home(DataService()),
     );
   }
 }
