@@ -33,6 +33,7 @@ class ShoppingListScreen extends StatelessWidget {
             context,
             MaterialPageRoute(builder: (context) => Inventory()),
           );
+          dataService.populateShoppingList();
         },
       ),
     );

@@ -75,7 +75,7 @@ class PersistenceService {
       file.writeAsStringSync("{}");
       debugPrint(basename(file
           .path)); // TODO: put in files from data folder when first starting the app
-      debugPrint(await rootBundle.loadString('dishes.json'));
+      debugPrint(await rootBundle.loadString('data/dishes.json'));
       return file;
     }
   }
