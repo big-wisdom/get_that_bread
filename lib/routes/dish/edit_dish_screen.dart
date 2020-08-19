@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/routes/ingredients/search_ingredients_screen.dart';
-import 'package:get_that_bread/routes/menus/widgets/dish.dart';
 
 class EditDishScreen extends StatefulWidget {
   final Dish _dish;
@@ -87,7 +87,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
                   .map(
                     (ingredient) => Card(
                       child: ListTile(
-                        title: Text(ingredient),
+                        title: Text(ingredient.toString()),
                         trailing: IconButton(
                           onPressed: () {},
                           icon: Icon(Icons.delete),

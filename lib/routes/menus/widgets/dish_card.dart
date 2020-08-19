@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/routes/dish/edit_dish_screen.dart';
-import 'package:get_that_bread/routes/menus/widgets/dish.dart';
 
 class DishCard extends StatelessWidget {
   final Dish _dish;
@@ -54,7 +54,7 @@ class DishCard extends StatelessWidget {
                     .map(
                       (ingredient) => Card(
                         child: ListTile(
-                          title: Text(ingredient),
+                          title: Text(ingredient.toString()),
                         ),
                       ),
                     )

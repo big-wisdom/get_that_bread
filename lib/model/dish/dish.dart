@@ -6,11 +6,12 @@ part 'dish.g.dart';
 
 @JsonSerializable()
 class Dish extends Food {
-  Dish(String name) : super(name);
+  Dish(String name, this.description) : super(name);
   factory Dish.fromJson(Map<String, dynamic> json) => _$DishFromJson(json);
   Map<String, dynamic> toJson() => _$DishToJson(this);
 
   List<Ingredient> ingredients = [];
+  String description;
 
   void addIngredient(Ingredient ingredient) {
     ingredients.add(ingredient);

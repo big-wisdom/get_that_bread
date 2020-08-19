@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get_that_bread/routes/menus/widgets/dish.dart';
+import 'package:get_that_bread/model/dish/dish.dart';
+import 'package:get_that_bread/model/menu/menu.dart';
 import 'package:get_that_bread/routes/menus/widgets/dish_card.dart';
-import 'package:get_that_bread/routes/menus/widgets/menu.dart';
-
+import 'package:get_that_bread/services/data_service/data_service.dart';
+import 'package:provider/provider.dart';
 
 class MenusScreen extends StatefulWidget {
   MenusScreen({Key key}) : super(key: key);
@@ -12,7 +13,7 @@ class MenusScreen extends StatefulWidget {
 }
 
 class _MenuState extends State<MenusScreen> {
-  List<Menu> _menus = generateMenus(5);
+  List<Menu> _menus = [];
 
   void _showDishDetails(BuildContext context, Dish dish) {
     showModalBottomSheet(
@@ -27,40 +28,41 @@ class _MenuState extends State<MenusScreen> {
 
   @override
   Widget build(BuildContext context) {
+    DataService dataService = Provider.of<DataService>(context);
+    _menus = dataService.menus;
     return Scaffold(
       appBar: AppBar(
         title: Text("Menus"),
       ),
-      body: ListView(
-          children: [
-            ..._menus.map(
-                  (menu) =>
-                  ExpansionTile(
-                    title: Row(
-                      children: [
-                        Expanded(
-                          child: Text(menu.title),
-                        ),
-                        IconButton(
-                          color: Colors.black.withOpacity(0.6),
-                          icon: Icon(Icons.edit),
-                          onPressed: () {},
-                        )
-                      ]
-                    ),
-                    children: [
-                      ...menu.dishes.map(
-                            (dish) =>
-                            ListTile(
-                                title: Text(dish.name),
-                                onTap: () => _showDishDetails(context, dish)),
-                      ).toList(),
-                    ],
-                    childrenPadding: EdgeInsets.only(left: 16.0),
-                    backgroundColor: Color.fromRGBO(225, 225, 225, 1.0),
+      body: ListView(children: [
+        ..._menus
+            .map(
+              (menu) => ExpansionTile(
+                title: Row(children: [
+                  Expanded(
+                    child: Text(menu.name),
                   ),
-            ).toList(),
-          ]),
+                  IconButton(
+                    color: Colors.black.withOpacity(0.6),
+                    icon: Icon(Icons.edit),
+                    onPressed: () {},
+                  )
+                ]),
+                children: [
+                  ...menu.dishes
+                      .map(
+                        (dish) => ListTile(
+                            title: Text(dish.name),
+                            onTap: () => _showDishDetails(context, dish)),
+                      )
+                      .toList(),
+                ],
+                childrenPadding: EdgeInsets.only(left: 16.0),
+                backgroundColor: Color.fromRGBO(225, 225, 225, 1.0),
+              ),
+            )
+            .toList(),
+      ]),
     );
   }
 }

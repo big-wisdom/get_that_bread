@@ -9,6 +9,7 @@ part of 'dish.dart';
 Dish _$DishFromJson(Map<String, dynamic> json) {
   return Dish(
     json['name'] as String,
+    json['description'] as String,
   )
     ..id = json['id'] as String
     ..ingredients = (json['ingredients'] as List)
@@ -21,4 +22,5 @@ Map<String, dynamic> _$DishToJson(Dish instance) => <String, dynamic>{
       'name': instance.name,
       'id': instance.id,
       'ingredients': instance.ingredients,
+      'description': instance.description,
     };
