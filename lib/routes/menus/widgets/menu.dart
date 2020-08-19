@@ -15,7 +15,7 @@ class Menu {
 List<Menu> generateMenus(int numberOfMenus) {
   return List.generate(
     numberOfMenus,
-        (int index) {
+    (int index) {
       return Menu(
         id: index,
         name: 'Menu $index',
