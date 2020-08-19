@@ -1,12 +1,16 @@
 // import 'dart:convert';
-// import 'dart:io';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:get_that_bread/model/menu/menu.dart';
+
 // import 'package:path_provider/path_provider.dart';
 
 main() {
-  Menu menu = Menu("Budget");
-  print(menu.toJson());
+  List<Menu> menus = [Menu("budget"), Menu("Also Budget")];
+  File file = File("lib/sandbox/test.json");
+  file.writeAsStringSync(json.encode(menus));
+  print(json.decode(file.readAsStringSync())[0]["name"]);
 }
 
 // Future<String> get _localPath async {
