@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:fuzzy/fuzzy.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/model/ingredient/ingredient.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
@@ -7,6 +8,7 @@ import 'package:get_that_bread/services/persistence_service/persistence_service.
 // this will control a list of Menus, list of Dishes, and list of Ingredients
 class DataService {
   final PersistenceService _persistenceService = PersistenceService();
+
   List<Menu> menus = [];
   List<Dish> dishes = [];
   List<Ingredient> ingredients = [];
@@ -111,6 +113,52 @@ class DataService {
     print("Adding Ingredient to Shopping List");
     shoppingList.add(ingredient);
     _persistenceService.encodeShoppingList(shoppingList);
+  }
+
+  Future<List<Dish>> searchDishes(String pattern) async {
+    final fuse = Fuzzy(
+      dishes,
+      options: FuzzyOptions(
+        keys: [
+          WeightedKey(
+              name: "name",
+              getter: (dish) {
+                return dish.name;
+              },
+              weight: 1)
+        ],
+      ),
+    );
+
+    final result = fuse.search(pattern);
+
+    debugPrint("Results");
+    result.forEach(print);
+
+    return Future.value(result.map((e) => e.item as Dish).toList());
+  }
+
+  Future<List<Ingredient>> searchIngredients(String pattern) async {
+    final fuse = Fuzzy(
+      ingredients,
+      options: FuzzyOptions(
+        keys: [
+          WeightedKey(
+              name: "name",
+              getter: (ingredient) {
+                return ingredient.name;
+              },
+              weight: 1)
+        ],
+      ),
+    );
+
+    final result = fuse.search(pattern);
+
+    debugPrint("Results");
+    result.forEach(print);
+
+    return Future.value(result.map((e) => e.item as Ingredient).toList());
   }
 
   void removeMenu(Menu menu) {

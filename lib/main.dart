@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
-import 'package:get_that_bread/model/ingredient/ingredient.dart';
-import 'package:get_that_bread/model/menu/menu.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
 
 void main() {
@@ -33,55 +32,23 @@ class Home extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Row(
-              children: [
-                RaisedButton(
-                  onPressed: dataService.printMenus,
-                  child: Text("Print Menus"),
-                ),
-                RaisedButton(
-                  onPressed: () => dataService.addMenu(
-                    Menu("Budget")
-                      ..addDish(
-                        Dish("Pasta")
-                          ..addIngredient(Ingredient("Noods"))
-                          ..addIngredient(Ingredient("Sauwce")),
-                      ),
-                  ),
-                  child: Text("Add Menu"),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                RaisedButton(
-                  onPressed: dataService.printDishes,
-                  child: Text("Print Dishes"),
-                ),
-                RaisedButton(
-                  onPressed: () => dataService.addDish(Dish("Pasta")
-                    ..addIngredient(Ingredient("noods"))
-                    ..addIngredient(Ingredient("Sauuuuce"))),
-                  child: Text("Add Dish"),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                RaisedButton(
-                  onPressed: dataService.printIngredients,
-                  child: Text("Print Ingredients"),
-                ),
-                RaisedButton(
-                  onPressed: () =>
-                      dataService.addIngredient(Ingredient("noods")),
-                  child: Text("Add Ingredient"),
-                ),
-              ],
+            TypeAheadField(
+                suggestionsCallback: (pattern) async {
+                  return await dataService.searchIngredients(pattern);
+                },
+                itemBuilder: (context, dish) => Card(
+                      child: Text("${dish.name}"),
+                    ),
+                onSuggestionSelected: (dish) {
+                  debugPrint("Dish Selected ${dish.id}");
+                }),
+            RaisedButton(
+              onPressed: () => dataService.addDish(Dish("Hamburgers")),
+              child: Text("Add Hamburgers"),
             ),
             RaisedButton(
-              onPressed: dataService.populateShoppingList,
-              child: Text("Populate Shopping List"),
+              onPressed: () => dataService.addDish(Dish("Pasta")),
+              child: Text("Add Pasta"),
             ),
           ],
         ),
