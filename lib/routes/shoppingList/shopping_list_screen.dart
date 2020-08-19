@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_that_bread/routes/inventory/inventory.dart';
-import 'file:///C:/Dev/flutter/get_that_bread/lib/widgets/counter.dart';
+import 'package:get_that_bread/widgets/counter.dart';
 
 class ShoppingListScreen extends StatelessWidget {
   @override
@@ -10,89 +10,89 @@ class ShoppingListScreen extends StatelessWidget {
         title: Text("Shopping List"),
       ),
       body: ListView(
-          padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 100.0),
-          shrinkWrap: true,
-          children: <Widget>[
-            Card(
-              child: ListTile(
-                title: Text("Eggs"),
-                trailing: Counter(),
-              ),
+        padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 100.0),
+        shrinkWrap: true,
+        children: <Widget>[
+          Card(
+            child: ListTile(
+              title: Text("Eggs"),
+              trailing: Counter(),
             ),
-            Card(
-              child: ListTile(
-                title: Text("Milk"),
-                trailing: Counter(),
-              ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("Milk"),
+              trailing: Counter(),
             ),
-            Card(
-              child: ListTile(
-                title: Text("Cheese"),
-                trailing: Counter(),
-              ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("Cheese"),
+              trailing: Counter(),
             ),
-            Card(
-              child: ListTile(
-                title: Text("BREAAAADD"),
-                trailing: Counter(),
-              ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("BREAAAADD"),
+              trailing: Counter(),
             ),
-            Card(
-              child: ListTile(
-                title: Text("Milk"),
-                trailing: Counter(),
-              ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("Milk"),
+              trailing: Counter(),
             ),
-            Card(
-              child: ListTile(
-                title: Text("Cheese"),
-                trailing: Counter(),
-              ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("Cheese"),
+              trailing: Counter(),
             ),
-            Card(
-              child: ListTile(
-                title: Text("BREAAAADD"),
-                trailing: Counter(),
-              ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("BREAAAADD"),
+              trailing: Counter(),
             ),
-            Card(
-              child: ListTile(
-                title: Text("Milk"),
-                trailing: Counter(),
-              ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("Milk"),
+              trailing: Counter(),
             ),
-            Card(
-              child: ListTile(
-                title: Text("Cheese"),
-                trailing: Counter(),
-              ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("Cheese"),
+              trailing: Counter(),
             ),
-            Card(
-              child: ListTile(
-                title: Text("BREAAAADD"),
-                trailing: Counter(),
-              ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("BREAAAADD"),
+              trailing: Counter(),
             ),
-            Card(
-              child: ListTile(
-                title: Text("Milk"),
-                trailing: Counter(),
-              ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("Milk"),
+              trailing: Counter(),
             ),
-            Card(
-              child: ListTile(
-                title: Text("Cheese"),
-                trailing: Counter(),
-              ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("Cheese"),
+              trailing: Counter(),
             ),
-            Card(
-              child: ListTile(
-                title: Text("BREAAAADD"),
-                trailing: Counter(),
-              ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text("BREAAAADD"),
+              trailing: Counter(),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton.extended(
         label: Text("Go Shopping"),
         icon: Icon(Icons.shopping_cart),
