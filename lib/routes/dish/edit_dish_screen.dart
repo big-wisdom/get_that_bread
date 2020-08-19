@@ -107,9 +107,9 @@ class _EditDishScreenState extends State<EditDishScreen> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.add),
-                    Text("Add Ingredient"),
-                  ],
+                  Icon(Icons.add),
+                  Text("Add Ingredient"),
+                ],
                 ),
               ),
               Padding(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_that_bread/routes/menus/edit_menus_screen.dart';
 import 'package:get_that_bread/routes/menus/widgets/dish.dart';
 import 'package:get_that_bread/routes/menus/widgets/dish_card.dart';
 import 'package:get_that_bread/routes/menus/widgets/menu.dart';
@@ -55,6 +56,22 @@ class _MenuState extends State<MenusScreen> {
                                 title: Text(dish.name),
                                 onTap: () => _showDishDetails(context, dish)),
                       ).toList(),
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => new EditMenusScreen()),
+                          );
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.add),
+                            Text("Add Ingredient"),
+                          ],
+                        ),
+                      ),
                     ],
                     childrenPadding: EdgeInsets.only(left: 16.0),
                     backgroundColor: Color.fromRGBO(225, 225, 225, 1.0),
