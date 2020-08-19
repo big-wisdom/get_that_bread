@@ -64,7 +64,7 @@ class PersistenceService {
 
   Future<File> get _shoppingListFile async {
     final path = await _localPath;
-    return createFileIfNonexistant(File('$path/shoppingList.json'));
+    return createFileIfNonexistant(File('$path/shopping_list.json'));
   }
 
   Future<File> createFileIfNonexistant(File file) async {
@@ -72,10 +72,8 @@ class PersistenceService {
       return file;
     } else {
       print("JSON File Doesn't Exist, creating it");
-      file.writeAsStringSync("{}");
-      debugPrint(basename(file
-          .path)); // TODO: put in files from data folder when first starting the app
-      debugPrint(await rootBundle.loadString('data/dishes.json'));
+      file.writeAsStringSync(
+          await rootBundle.loadString('data/${basename(file.path)}'));
       return file;
     }
   }
