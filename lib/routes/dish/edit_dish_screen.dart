@@ -5,24 +5,33 @@ import 'package:get_that_bread/routes/ingredients/search_ingredients_screen.dart
 class EditDishScreen extends StatefulWidget {
   final Dish _dish;
 
-  EditDishScreen([
-    this._dish,
-  ]);
+  EditDishScreen([this._dish]);
 
   @override
   _EditDishScreenState createState() => _EditDishScreenState();
 }
 
+enum Status { creating, editing }
+
 class _EditDishScreenState extends State<EditDishScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _dishNameController;
   TextEditingController _dishDescriptionController;
+  Status status;
 
   @override
   void initState() {
-    _dishNameController = new TextEditingController(text: widget._dish.name);
-    _dishDescriptionController =
-        new TextEditingController(text: widget._dish.description);
+    _dishNameController = new TextEditingController();
+    _dishDescriptionController = new TextEditingController();
+
+    if (widget._dish == null) {
+      status = Status.creating;
+    } else {
+      status = Status.editing;
+      _dishNameController.text = widget._dish.name;
+      _dishDescriptionController.text = widget._dish.description;
+    }
+
     super.initState();
   }
 
@@ -48,7 +57,11 @@ class _EditDishScreenState extends State<EditDishScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Edit Dish")),
+      appBar: AppBar(
+        title: (status == Status.creating)
+            ? Text("Create Dish")
+            : Text("Edit Dish"),
+      ),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -83,19 +96,21 @@ class _EditDishScreenState extends State<EditDishScreen> {
                 padding: EdgeInsets.only(top: 32.0, bottom: 16.0),
                 child: Text("Ingredients", style: TextStyle(fontSize: 24.0)),
               ),
-              ...widget._dish.ingredients
-                  .map(
-                    (ingredient) => Card(
-                      child: ListTile(
-                        title: Text(ingredient.toString()),
-                        trailing: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.delete),
+              if (status == Status.editing)
+                ...widget._dish.ingredients
+                    .map(
+                      (ingredient) =>
+                      Card(
+                        child: ListTile(
+                          title: Text(ingredient.toString()),
+                          trailing: IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.delete),
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                  .toList(),
+                )
+                    .toList(),
               FlatButton(
                 onPressed: () {
                   Navigator.push(
