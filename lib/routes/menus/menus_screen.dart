@@ -62,6 +62,26 @@ class _MenuState extends State<MenusScreen> {
               ),
             )
             .toList(),
+        Container(
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.all(16.0),
+          child: FlatButton(
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => new EditMenusScreen()),
+              );
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.add),
+                Text("Add Menu"),
+              ],
+            ),
+          ),
+        ),
       ]),
     );
   }
