@@ -75,10 +75,11 @@ class _MenuState extends State<MenusScreen> {
                 children: [
                   ...menu.dishes
                       .map(
-                        (dish) => ListTile(
-                            title: Text(dish.name),
+                        (dishWrapper) => ListTile(
+                            title: Text(dishWrapper.dish.toString()),
                             trailing: Counter(),
-                            onTap: () => _showDishDetails(context, dish)),
+                            onTap: () =>
+                                _showDishDetails(context, dishWrapper.dish)),
                       )
                       .toList(),
                 ],

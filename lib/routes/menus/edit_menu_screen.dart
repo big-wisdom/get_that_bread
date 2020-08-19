@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
+import 'package:get_that_bread/model/menu/widgets/dish_wrapper.dart';
 import 'package:get_that_bread/routes/dish/edit_dish_screen.dart';
 import 'package:get_that_bread/routes/menus/widgets/dish_card.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
@@ -33,7 +34,7 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
       _selectedDishes = [];
     } else {
       status = Status.editing;
-      _selectedDishes = widget._menu.dishes;
+      _selectedDishes = widget._menu.dishes.map((e) => e.dish);
       _menuNameController.text = widget._menu.name;
     }
 
@@ -57,12 +58,12 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
     );
   }
 
-  void _toggleDish(Dish dish) {
+  void _toggleDish(Dish dishWrapper) {
     setState(() {
-      if (_selectedDishes.contains(dish)) {
-        _selectedDishes.remove(dish);
+      if (_selectedDishes.contains(dishWrapper)) {
+        _selectedDishes.remove(dishWrapper);
       } else {
-        _selectedDishes.add(dish);
+        _selectedDishes.add(dishWrapper);
       }
     });
   }
@@ -70,7 +71,7 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
   Menu _createMenu() {
     Menu myMenu = Menu(_menuNameController.text);
     for (Dish myDish in _selectedDishes) {
-      myMenu.addDish(myDish);
+      myMenu.addDish(DishWrapper(count: 0, dish: myDish));
     }
     return myMenu;
   }

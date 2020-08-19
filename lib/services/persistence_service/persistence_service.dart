@@ -90,7 +90,7 @@ class PersistenceService {
     try {
       // Read the file.
       String contents = file.readAsStringSync();
-
+      // print(contents);
       return contents == "{}" ? [] : json.decode(contents);
     } catch (e) {
       debugPrint("Failed to read JSON");

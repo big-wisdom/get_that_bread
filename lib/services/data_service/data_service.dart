@@ -4,6 +4,7 @@ import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/model/dish/widgets/ingredient_wrapper.dart';
 import 'package:get_that_bread/model/ingredient/ingredient.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
+import 'package:get_that_bread/model/menu/widgets/dish_wrapper.dart';
 import 'package:get_that_bread/services/persistence_service/persistence_service.dart';
 
 // this will control a list of Menus, list of Dishes, and list of Ingredients
@@ -24,8 +25,8 @@ class DataService extends ChangeNotifier {
     print("Populating Shopping List");
     Menu menu = menus[0];
     shoppingList = [];
-    for (Dish dish in menu.dishes) {
-      for (IngredientWrapper iw in dish.ingredients) {
+    for (DishWrapper dishWrapper in menu.dishes) {
+      for (IngredientWrapper iw in dishWrapper.dish.ingredients) {
         shoppingList.add(iw);
       }
     }
@@ -99,8 +100,8 @@ class DataService extends ChangeNotifier {
   void addMenu(Menu menu) {
     print("Adding Menu");
     menus.add(menu);
-    for (Dish dish in menu.dishes) {
-      if (!dishes.contains(dish)) addDish(dish);
+    for (DishWrapper dishWrapper in menu.dishes) {
+      if (!dishes.contains(dishWrapper.dish)) addDish(dishWrapper.dish);
     }
     _persistenceService.encodeMenus(menus);
     notifyListeners();

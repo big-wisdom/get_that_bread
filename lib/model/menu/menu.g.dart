@@ -12,13 +12,13 @@ Menu _$MenuFromJson(Map<String, dynamic> json) {
   )
     ..id = json['id'] as String
     ..dishes = (json['dishes'] as List)
-        ?.map(
-            (e) => e == null ? null : Dish.fromJson(e as Map<String, dynamic>))
+        ?.map((e) =>
+            e == null ? null : DishWrapper.fromJson(e as Map<String, dynamic>))
         ?.toList();
 }
 
 Map<String, dynamic> _$MenuToJson(Menu instance) => <String, dynamic>{
       'name': instance.name,
       'id': instance.id,
-      'dishes': instance.dishes,
+      'dishes': instance.dishes?.map((e) => e?.toJson())?.toList(),
     };

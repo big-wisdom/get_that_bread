@@ -1,18 +1,18 @@
-import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/model/food/food.dart';
+import 'package:get_that_bread/model/menu/widgets/dish_wrapper.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'menu.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Menu extends Food {
   Menu(String name) : super(name);
   factory Menu.fromJson(Map<String, dynamic> json) => _$MenuFromJson(json);
   Map<String, dynamic> toJson() => _$MenuToJson(this);
 
-  List<Dish> dishes = [];
+  List<DishWrapper> dishes = [];
 
-  void addDish(Dish dish) {
+  void addDish(DishWrapper dish) {
     dishes.add(dish);
   }
 
