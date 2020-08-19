@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/model/ingredient/ingredient.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 class PersistenceService {
@@ -71,6 +73,9 @@ class PersistenceService {
     } else {
       print("JSON File Doesn't Exist, creating it");
       file.writeAsStringSync("{}");
+      debugPrint(basename(file
+          .path)); // TODO: put in files from data folder when first starting the app
+      debugPrint(await rootBundle.loadString('dishes.json'));
       return file;
     }
   }

@@ -54,7 +54,7 @@ class DishCard extends StatelessWidget {
                     .map(
                       (ingredient) => Card(
                         child: ListTile(
-                          title: Text(ingredient.toString()),
+                          title: Text(ingredient.name),
                         ),
                       ),
                     )
