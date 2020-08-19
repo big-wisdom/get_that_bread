@@ -20,10 +20,10 @@ class _EditDishScreenState extends State<EditDishScreen> {
 
   @override
   void initState() {
-    super.initState();
     _dishNameController = new TextEditingController(text: widget._dish.name);
     _dishDescriptionController =
         new TextEditingController(text: widget._dish.description);
+    super.initState();
   }
 
   @override
@@ -107,9 +107,9 @@ class _EditDishScreenState extends State<EditDishScreen> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                  Icon(Icons.add),
-                  Text("Add Ingredient"),
-                ],
+                    Icon(Icons.add),
+                    Text("Add Ingredient"),
+                  ],
                 ),
               ),
               Padding(
