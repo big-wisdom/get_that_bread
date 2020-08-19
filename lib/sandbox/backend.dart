@@ -1,50 +1,26 @@
-// import 'dart:convert';
-import 'dart:convert';
-import 'dart:io';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:uuid/uuid.dart';
 
-import 'package:get_that_bread/model/menu/menu.dart';
-
-// import 'package:path_provider/path_provider.dart';
+part 'backend.g.dart';
 
 main() {
-  List<Menu> menus = [Menu("budget"), Menu("Also Budget")];
-  File file = File("lib/sandbox/test.json");
-  file.writeAsStringSync(json.encode(menus));
-  print(json.decode(file.readAsStringSync())[0]["name"]);
+  Future.delayed(Duration(seconds: 1)).then((value) => print("Eli"));
+  print("Hermann");
 }
 
-// Future<String> get _localPath async {
-//   final directory = await getApplicationDocumentsDirectory();
-//   return directory.path;
-// }
+abstract class FoodTest {
+  String name;
+  String id;
+  FoodTest(this.name) {
+    id = Uuid().v1();
+  }
+}
 
-// Future<File> get _menusFile async {
-//   final path = await _localPath;
-//   return File('$path/menus.json');
-// }
+@JsonSerializable()
+class Eli extends FoodTest {
+  Eli(String name) : super(name);
 
-// Future<File> get _dishesFile async {
-//   final path = await _localPath;
-//   return File('$path/dishes.json');
-// }
+  factory Eli.fromJson(Map<String, dynamic> json) => _$EliFromJson(json);
 
-// Future<File> get _ingredientsFile async {
-//   final path = await _localPath;
-//   return File('$path/dishes.json');
-// }
-
-// Future<File> writeJson(File file, String data) async {
-//   // Write the file.
-//   return file.writeAsString(data);
-// }
-
-// Future<Map<String, dynamic>> readJson(File file) async {
-//   try {
-//     // Read the file.
-//     String contents = await file.readAsString();
-
-//     return json.decode(contents);
-//   } catch (e) {
-//     print("Failed to read JSON");
-//   }
-// }
+  Map<String, dynamic> toJson() => _$EliToJson(this);
+}

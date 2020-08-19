@@ -40,7 +40,14 @@ class Home extends StatelessWidget {
                   child: Text("Print Menus"),
                 ),
                 RaisedButton(
-                  onPressed: () => dataService.addMenu(Menu("Budget")),
+                  onPressed: () => dataService.addMenu(
+                    Menu("Budget")
+                      ..addDish(
+                        Dish("Pasta")
+                          ..addIngredient(Ingredient("Noods"))
+                          ..addIngredient(Ingredient("Sauwce")),
+                      ),
+                  ),
                   child: Text("Add Menu"),
                 ),
               ],
@@ -52,7 +59,9 @@ class Home extends StatelessWidget {
                   child: Text("Print Dishes"),
                 ),
                 RaisedButton(
-                  onPressed: () => dataService.addDish(Dish("Pasta")),
+                  onPressed: () => dataService.addDish(Dish("Pasta")
+                    ..addIngredient(Ingredient("noods"))
+                    ..addIngredient(Ingredient("Sauuuuce"))),
                   child: Text("Add Dish"),
                 ),
               ],
@@ -69,6 +78,10 @@ class Home extends StatelessWidget {
                   child: Text("Add Ingredient"),
                 ),
               ],
+            ),
+            RaisedButton(
+              onPressed: dataService.populateShoppingList,
+              child: Text("Populate Shopping List"),
             ),
           ],
         ),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/model/ingredient/ingredient.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
@@ -14,51 +15,52 @@ class DataService {
     _loadEverything();
   }
 
+  void populateShoppingList() {
+    print("Populating Shopping List");
+  }
+
   void _loadEverything() {
     _loadMenus();
     _loadDishes();
     _loadIngredients();
   }
 
-  void _loadMenus() {
-    _persistenceService.decodeMenus().then((value) {
-      menus = value.map((e) => Menu.fromJson(e));
-    });
+  Future<void> _loadMenus() async {
+    final result = await _persistenceService.decodeMenus();
+    menus = result.map((e) => Menu.fromJson(e)).toList();
   }
 
-  void _loadDishes() {
-    _persistenceService.decodeDishes().then((value) {
-      dishes = value.map((e) => Dish.fromJson(e));
-    });
+  Future<void> _loadDishes() async {
+    final result = await _persistenceService.decodeDishes();
+    dishes = result.map((e) => Dish.fromJson(e)).toList();
   }
 
-  void _loadIngredients() {
-    _persistenceService.decodeIngredients().then((value) {
-      ingredients = value.map((e) => Ingredient.fromJson(e));
-    });
+  Future<void> _loadIngredients() async {
+    final result = await _persistenceService.decodeIngredients();
+    ingredients = result.map((e) => Ingredient.fromJson(e)).toList();
   }
 
-  void printMenus() {
-    _loadMenus();
+  void printMenus() async {
+    await _loadMenus(); // is this finishing before it moves to the next line?
     print("Menus");
     for (int x = 0; x < menus.length; x++) {
-      print(menus[x].name);
+      print("${menus[x]}");
     }
   }
 
-  void printDishes() {
-    _loadDishes();
+  void printDishes() async {
+    await _loadDishes();
     print("Dishes");
     for (int x = 0; x < dishes.length; x++) {
-      print(dishes[x].name);
+      debugPrint("${dishes[x]}");
     }
   }
 
-  void printIngredients() {
-    _loadIngredients();
+  void printIngredients() async {
+    await _loadIngredients();
     print("Ingredients");
     for (int x = 0; x < ingredients.length; x++) {
-      print(ingredients[x].name);
+      debugPrint("${ingredients[x]}");
     }
   }
 
