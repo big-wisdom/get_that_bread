@@ -94,12 +94,18 @@ class DataService {
   void addMenu(Menu menu) {
     print("Adding Menu");
     menus.add(menu);
+    for (Dish dish in menu.dishes) {
+      if (!dishes.contains(dish)) addDish(dish);
+    }
     _persistenceService.encodeMenus(menus);
   }
 
   void addDish(Dish dish) {
     print("Adding Dish");
     dishes.add(dish);
+    for (Ingredient ingredient in dish.ingredients) {
+      if (!ingredients.contains(ingredient)) addIngredient(ingredient);
+    }
     _persistenceService.encodeDishes(dishes);
   }
 
