@@ -19,9 +19,10 @@ class DataService extends ChangeNotifier {
   }
 
   void populateShoppingList() {
-    // Eventually pass the menu to work from to this method
+    // TODO: Eventually pass the menu to work from to this method
     print("Populating Shopping List");
     Menu menu = menus[0];
+    shoppingList = [];
     for (int dish = 0; dish < menu.dishes.length; dish++) {
       Dish currentDish = menu.dishes[dish];
       for (int ingredient = 0;
@@ -30,6 +31,7 @@ class DataService extends ChangeNotifier {
         shoppingList.add(currentDish.ingredients[ingredient]);
       }
     }
+    notifyListeners();
   }
 
   void _loadEverything() {
