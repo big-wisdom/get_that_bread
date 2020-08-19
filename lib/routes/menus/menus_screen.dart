@@ -69,19 +69,9 @@ class _MenuState extends State<MenusScreen> {
           child: FlatButton(
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onPressed: () {
-              Navigator.push(
-                context,
+              Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => new EditMenusScreen(
-                    dataService,
-                    (menu) {
-                      setState(
-                        () {
-                          dataService.addMenu(menu);
-                        },
-                      );
-                    },
-                  ),
+                  builder: (context) => new EditMenusScreen(),
                 ),
               );
             },

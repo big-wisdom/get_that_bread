@@ -6,7 +6,7 @@ import 'package:get_that_bread/model/menu/menu.dart';
 import 'package:get_that_bread/services/persistence_service/persistence_service.dart';
 
 // this will control a list of Menus, list of Dishes, and list of Ingredients
-class DataService {
+class DataService extends ChangeNotifier {
   final PersistenceService _persistenceService = PersistenceService();
 
   List<Menu> menus = [];
@@ -42,21 +42,25 @@ class DataService {
   Future<void> _loadMenus() async {
     final result = await _persistenceService.decodeMenus();
     menus = result.map((e) => Menu.fromJson(e)).toList();
+    notifyListeners();
   }
 
   Future<void> _loadDishes() async {
     final result = await _persistenceService.decodeDishes();
     dishes = result.map((e) => Dish.fromJson(e)).toList();
+    notifyListeners();
   }
 
   Future<void> _loadIngredients() async {
     final result = await _persistenceService.decodeIngredients();
     ingredients = result.map((e) => Ingredient.fromJson(e)).toList();
+    notifyListeners();
   }
 
   Future<void> _loadShoppingList() async {
     final result = await _persistenceService.decodeShoppingList();
     shoppingList = result.map((e) => Ingredient.fromJson(e)).toList();
+    notifyListeners();
   }
 
   void printMenus() async {
@@ -98,6 +102,7 @@ class DataService {
       if (!dishes.contains(dish)) addDish(dish);
     }
     _persistenceService.encodeMenus(menus);
+    notifyListeners();
   }
 
   void addDish(Dish dish) {

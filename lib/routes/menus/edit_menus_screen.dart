@@ -6,16 +6,6 @@ import 'package:get_that_bread/services/data_service/data_service.dart';
 import 'package:provider/provider.dart';
 
 class EditMenusScreen extends StatefulWidget {
-  final Menu _menu;
-  final DataService dataService;
-  final Function(Menu menu) addMenu;
-
-  EditMenusScreen(
-    this.dataService,
-    this.addMenu, [
-    this._menu,
-  ]);
-
   @override
   _EditMenusScreenState createState() => _EditMenusScreenState();
 }
@@ -69,7 +59,8 @@ class _EditMenusScreenState extends State<EditMenusScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _dishes = widget.dataService.dishes;
+    DataService dataService = Provider.of<DataService>(context);
+    _dishes = dataService.dishes;
     return Scaffold(
       appBar: AppBar(title: Text("Create New Menu")),
       body: Form(
@@ -147,7 +138,7 @@ class _EditMenusScreenState extends State<EditMenusScreen> {
                   if (_formKey.currentState.validate()) {
                     Navigator.pop(context);
                   }
-                  widget.addMenu(_createMenu());
+                  dataService.addMenu(_createMenu());
                 },
                 child: Text('Save Menu'),
               ),

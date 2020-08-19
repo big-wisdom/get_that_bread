@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get_that_bread/routes/home.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(GetThatBread());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => DataService(),
+      child: GetThatBread(),
+    ),
+  );
 }
 
 class GetThatBread extends StatelessWidget {
@@ -15,7 +21,7 @@ class GetThatBread extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Home(DataService()),
+      home: Home(),
     );
   }
 }

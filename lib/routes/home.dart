@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_that_bread/routes/menus/menus_screen.dart';
 import 'package:get_that_bread/routes/shoppingList/shopping_list_screen.dart';
-import 'package:get_that_bread/services/data_service/data_service.dart';
-import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
-  final DataService dataService;
-  Home(this.dataService);
-
   @override
   _HomeState createState() => _HomeState();
 }
@@ -30,10 +25,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Provider<DataService>(
-          create: (_) => widget.dataService,
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
