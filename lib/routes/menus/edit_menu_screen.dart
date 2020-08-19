@@ -170,8 +170,8 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
                     Navigator.pop(context);
+                    dataService.addMenu(_createMenu());
                   }
-                  dataService.addMenu(_createMenu());
                 },
                 child: Text('Save Menu'),
               ),
