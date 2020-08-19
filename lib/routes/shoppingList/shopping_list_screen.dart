@@ -1,97 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get_that_bread/routes/inventory/inventory.dart';
+import 'package:get_that_bread/services/data_service/data_service.dart';
 import 'package:get_that_bread/widgets/counter.dart';
+import 'package:provider/provider.dart';
 
 class ShoppingListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    DataService dataService = Provider.of<DataService>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Shopping List"),
       ),
-      body: ListView(
+      body: ListView.builder(
         padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 100.0),
         shrinkWrap: true,
-        children: <Widget>[
-          Card(
+        itemCount: dataService.shoppingList.length,
+        itemBuilder: (context, index) {
+          return Card(
             child: ListTile(
-              title: Text("Eggs"),
+              title: Text(dataService.shoppingList[index].name),
               trailing: Counter(),
             ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("Milk"),
-              trailing: Counter(),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("Cheese"),
-              trailing: Counter(),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("BREAAAADD"),
-              trailing: Counter(),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("Milk"),
-              trailing: Counter(),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("Cheese"),
-              trailing: Counter(),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("BREAAAADD"),
-              trailing: Counter(),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("Milk"),
-              trailing: Counter(),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("Cheese"),
-              trailing: Counter(),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("BREAAAADD"),
-              trailing: Counter(),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("Milk"),
-              trailing: Counter(),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("Cheese"),
-              trailing: Counter(),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text("BREAAAADD"),
-              trailing: Counter(),
-            ),
-          ),
-        ],
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: Text("Go Shopping"),
