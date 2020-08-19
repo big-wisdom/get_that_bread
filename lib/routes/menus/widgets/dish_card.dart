@@ -13,7 +13,9 @@ class DishCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.fromLTRB(4.0, 150.0, 4.0, 0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
       clipBehavior: Clip.antiAlias,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -34,7 +36,8 @@ class DishCard extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EditDishScreen(_dish)),
+                  MaterialPageRoute(
+                      builder: (context) => new EditDishScreen(_dish)),
                 );
               },
             ),
