@@ -88,6 +88,10 @@ class _EditDishScreenState extends State<EditDishScreen> {
                     (ingredient) => Card(
                       child: ListTile(
                         title: Text(ingredient),
+                        trailing: IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.delete),
+                        ),
                       ),
                     ),
                   )
