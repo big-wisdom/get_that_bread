@@ -34,6 +34,7 @@ class DataService {
     _loadMenus();
     _loadDishes();
     _loadIngredients();
+    _loadShoppingList();
   }
 
   Future<void> _loadMenus() async {
@@ -49,6 +50,11 @@ class DataService {
   Future<void> _loadIngredients() async {
     final result = await _persistenceService.decodeIngredients();
     ingredients = result.map((e) => Ingredient.fromJson(e)).toList();
+  }
+
+  Future<void> _loadShoppingList() async {
+    final result = await _persistenceService.decodeShoppingList();
+    shoppingList = result.map((e) => Ingredient.fromJson(e)).toList();
   }
 
   void printMenus() async {
@@ -75,6 +81,14 @@ class DataService {
     }
   }
 
+  void printShoppingList() async {
+    await _loadIngredients();
+    print("Ingredients");
+    for (int x = 0; x < ingredients.length; x++) {
+      debugPrint("${shoppingList[x]}");
+    }
+  }
+
   void addMenu(Menu menu) {
     print("Adding Menu");
     menus.add(menu);
@@ -91,6 +105,12 @@ class DataService {
     print("Adding Ingredient");
     ingredients.add(ingredient);
     _persistenceService.encodeIngredients(ingredients);
+  }
+
+  void addToShoppingList(Ingredient ingredient) {
+    print("Adding Ingredient to Shopping List");
+    shoppingList.add(ingredient);
+    _persistenceService.encodeShoppingList(shoppingList);
   }
 
   void removeMenu(Menu menu) {

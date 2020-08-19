@@ -20,6 +20,10 @@ class PersistenceService {
     _writeJson(await _ingredientsFile, json.encode(ingredients));
   }
 
+  Future<void> encodeShoppingList(List<Ingredient> shoppingList) async {
+    _writeJson(await _shoppingListFile, json.encode(shoppingList));
+  }
+
   Future<List<dynamic>> decodeMenus() async {
     return _readJson(await _menusFile);
   }
@@ -30,6 +34,10 @@ class PersistenceService {
 
   Future<List<dynamic>> decodeIngredients() async {
     return _readJson(await _ingredientsFile);
+  }
+
+  Future<List<dynamic>> decodeShoppingList() async {
+    return _readJson(await _shoppingListFile);
   }
 
   Future<String> get _localPath async {
@@ -50,6 +58,11 @@ class PersistenceService {
   Future<File> get _ingredientsFile async {
     final path = await _localPath;
     return createFileIfNonexistant(File('$path/ingredients.json'));
+  }
+
+  Future<File> get _shoppingListFile async {
+    final path = await _localPath;
+    return createFileIfNonexistant(File('$path/shoppingList.json'));
   }
 
   Future<File> createFileIfNonexistant(File file) async {
