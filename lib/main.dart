@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_that_bread/model/dish/dish.dart';
+import 'package:get_that_bread/model/ingredient/ingredient.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
 
@@ -31,14 +33,43 @@ class Home extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            RaisedButton(
-              onPressed: dataService.printMenus,
-              child: Text("Print Menus"),
+            Row(
+              children: [
+                RaisedButton(
+                  onPressed: dataService.printMenus,
+                  child: Text("Print Menus"),
+                ),
+                RaisedButton(
+                  onPressed: () => dataService.addMenu(Menu("Budget")),
+                  child: Text("Add Menu"),
+                ),
+              ],
             ),
-            RaisedButton(
-              onPressed: () => dataService.addMenu(Menu("Budget")),
-              child: Text("Add Menu"),
-            )
+            Row(
+              children: [
+                RaisedButton(
+                  onPressed: dataService.printDishes,
+                  child: Text("Print Dishes"),
+                ),
+                RaisedButton(
+                  onPressed: () => dataService.addDish(Dish("Pasta")),
+                  child: Text("Add Dish"),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                RaisedButton(
+                  onPressed: dataService.printIngredients,
+                  child: Text("Print Ingredients"),
+                ),
+                RaisedButton(
+                  onPressed: () =>
+                      dataService.addIngredient(Ingredient("noods")),
+                  child: Text("Add Ingredient"),
+                ),
+              ],
+            ),
           ],
         ),
       ),
