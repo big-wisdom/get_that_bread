@@ -18,7 +18,8 @@ class Inventory extends StatelessWidget {
           return Card(
             child: ListTile(
               leading: Icon(Icons.texture),
-              title: Text(dataService.shoppingList[index].name),
+              title:
+                  Text(dataService.shoppingList[index].ingredient.toString()),
               trailing: Counter(),
             ),
           );

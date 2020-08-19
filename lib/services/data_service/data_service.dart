@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:fuzzy/fuzzy.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
+import 'package:get_that_bread/model/dish/widgets/ingredient_wrapper.dart';
 import 'package:get_that_bread/model/ingredient/ingredient.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
 import 'package:get_that_bread/services/persistence_service/persistence_service.dart';
@@ -12,25 +13,23 @@ class DataService extends ChangeNotifier {
   List<Menu> menus = [];
   List<Dish> dishes = [];
   List<Ingredient> ingredients = [];
-  List<Ingredient> shoppingList = [];
+  List<IngredientWrapper> shoppingList = [];
 
   DataService() {
     _loadEverything();
   }
 
-  void populateShoppingList() {
+  void populateShoppingList() async {
     // TODO: Eventually pass the menu to work from to this method
     print("Populating Shopping List");
     Menu menu = menus[0];
     shoppingList = [];
-    for (int dish = 0; dish < menu.dishes.length; dish++) {
-      Dish currentDish = menu.dishes[dish];
-      for (int ingredient = 0;
-          ingredient < currentDish.ingredients.length;
-          ingredient++) {
-        shoppingList.add(currentDish.ingredients[ingredient]);
+    for (Dish dish in menu.dishes) {
+      for (IngredientWrapper iw in dish.ingredients) {
+        shoppingList.add(iw);
       }
     }
+    await _persistenceService.encodeShoppingList(shoppingList);
     notifyListeners();
   }
 
@@ -61,7 +60,7 @@ class DataService extends ChangeNotifier {
 
   Future<void> _loadShoppingList() async {
     final result = await _persistenceService.decodeShoppingList();
-    shoppingList = result.map((e) => Ingredient.fromJson(e)).toList();
+    shoppingList = result.map((e) => IngredientWrapper.fromJson(e)).toList();
     notifyListeners();
   }
 
@@ -110,8 +109,9 @@ class DataService extends ChangeNotifier {
   void addDish(Dish dish) {
     print("Adding Dish");
     dishes.add(dish);
-    for (Ingredient ingredient in dish.ingredients) {
-      if (!ingredients.contains(ingredient)) addIngredient(ingredient);
+    for (IngredientWrapper ingredient in dish.ingredients) {
+      if (!ingredients.contains(ingredient))
+        addIngredient(ingredient.ingredient);
     }
     _persistenceService.encodeDishes(dishes);
     notifyListeners();
@@ -124,7 +124,7 @@ class DataService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addToShoppingList(Ingredient ingredient) {
+  void addToShoppingList(IngredientWrapper ingredient) {
     print("Adding Ingredient to Shopping List");
     shoppingList.add(ingredient);
     _persistenceService.encodeShoppingList(shoppingList);

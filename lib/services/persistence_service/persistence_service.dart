@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
+import 'package:get_that_bread/model/dish/widgets/ingredient_wrapper.dart';
 import 'package:get_that_bread/model/ingredient/ingredient.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
 import 'package:path/path.dart';
@@ -22,7 +23,7 @@ class PersistenceService {
     _writeJson(await _ingredientsFile, json.encode(ingredients));
   }
 
-  Future<void> encodeShoppingList(List<Ingredient> shoppingList) async {
+  Future<void> encodeShoppingList(List<IngredientWrapper> shoppingList) async {
     _writeJson(await _shoppingListFile, json.encode(shoppingList));
   }
 
@@ -39,7 +40,9 @@ class PersistenceService {
   }
 
   Future<List<dynamic>> decodeShoppingList() async {
-    return _readJson(await _shoppingListFile);
+    var result = _readJson(await _shoppingListFile);
+
+    return result;
   }
 
   Future<String> get _localPath async {

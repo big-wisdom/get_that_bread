@@ -13,14 +13,15 @@ Dish _$DishFromJson(Map<String, dynamic> json) {
   )
     ..id = json['id'] as String
     ..ingredients = (json['ingredients'] as List)
-        ?.map((e) =>
-            e == null ? null : Ingredient.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : IngredientWrapper.fromJson(e as Map<String, dynamic>))
         ?.toList();
 }
 
 Map<String, dynamic> _$DishToJson(Dish instance) => <String, dynamic>{
       'name': instance.name,
       'id': instance.id,
-      'ingredients': instance.ingredients,
+      'ingredients': instance.ingredients?.map((e) => e?.toJson())?.toList(),
       'description': instance.description,
     };

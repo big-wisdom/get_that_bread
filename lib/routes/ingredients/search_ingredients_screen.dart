@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
+import 'package:get_that_bread/model/dish/widgets/ingredient_wrapper.dart';
 import 'package:get_that_bread/model/ingredient/ingredient.dart';
 import 'package:get_that_bread/routes/ingredients/edit_ingredients_screen.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
@@ -18,7 +19,7 @@ class SearchIngredientsScreen extends StatefulWidget {
 
 class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
   List<Ingredient> _ingredients;
-  List<Ingredient> _selectedIngredients;
+  List<IngredientWrapper> _selectedIngredients;
 
   @override
   void initState() {

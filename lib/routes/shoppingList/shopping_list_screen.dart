@@ -8,7 +8,6 @@ class ShoppingListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DataService dataService = Provider.of<DataService>(context);
-    debugPrint("rebuilding shopping list screen");
     return Scaffold(
       appBar: AppBar(
         title: Text("Shopping List"),
@@ -20,7 +19,8 @@ class ShoppingListScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           return Card(
             child: ListTile(
-              title: Text(dataService.shoppingList[index].name),
+              title:
+                  Text(dataService.shoppingList[index].ingredient.toString()),
               trailing: Counter(),
             ),
           );
