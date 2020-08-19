@@ -104,7 +104,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
                 padding: EdgeInsets.only(top: 32.0, bottom: 16.0),
                 child: Text("Ingredients", style: TextStyle(fontSize: 24.0)),
               ),
-              if (status == Status.editing)
+              if (status == Status.creating)
                 ...widget._dish.ingredients
                     .map(
                       (ingredient) => Card(
@@ -123,7 +123,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => new SearchIngredientsScreen(widget._dish)),
+                        builder: (context) => new SearchIngredientsScreen()),
                   );
                 },
                 child: Row(

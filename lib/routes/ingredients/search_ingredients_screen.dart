@@ -22,7 +22,13 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
 
   @override
   void initState() {
-    _selectedIngredients = widget._dish.ingredients;
+
+    _ingredients = [];
+    if (widget._dish != null) {
+      _selectedIngredients = widget._dish.ingredients;
+    }
+
+
     super.initState();
   }
 

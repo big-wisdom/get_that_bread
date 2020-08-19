@@ -51,6 +51,13 @@ class _CounterState extends State<Counter> {
     });
   }
 
+  void setCount(int count) {
+    setState(() {
+      _counter = count;
+      _controller.text = count.toString();
+    });
+  }
+
   int getCount() {
     return _counter;
   }
