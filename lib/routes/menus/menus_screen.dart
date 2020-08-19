@@ -36,58 +36,61 @@ class _MenuState extends State<MenusScreen> {
       appBar: AppBar(
         title: Text("Menus"),
       ),
-      body: ListView(children: [
-        ..._menus
-            .map(
-              (menu) => ExpansionTile(
-                title: Row(children: [
-                  PopupMenuButton(
+      body: SingleChildScrollView(
+        child: ExpansionPanelList.radio(
+          children: _menus.map<ExpansionPanelRadio>((Menu menu) {
+            return ExpansionPanelRadio(
+                value: menu.id,
+                headerBuilder: (BuildContext context, bool isExpanded) {
+                  return ListTile(
+                    leading: PopupMenuButton(
+                      captureInheritedThemes: false,
                       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                            PopupMenuItem(
-                              child: ListTile(
-                                leading: Icon(Icons.edit),
-                                title: Text("Edit"),
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          new EditMenuScreen(menu),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            PopupMenuDivider(),
-                            PopupMenuItem(
-                              child: ListTile(
-                                leading: Icon(Icons.delete),
-                                title: Text("Delete"),
-                                onTap: () {
-                                  dataService.removeMenu(menu);
-                                },
-                              ),
-                            ),
-                          ]),
-                  Expanded(
-                    child: Text(menu.name),
-                  ),
-                ]),
-                children: [
-                  ...menu.dishes
-                      .map(
-                        (dish) => ListTile(
-                            title: Text(dish.name),
-                            trailing: Counter(),
-                            onTap: () => _showDishDetails(context, dish)),
-                      )
-                      .toList(),
-                ],
-                childrenPadding: EdgeInsets.only(left: 16.0),
-                backgroundColor: Color.fromRGBO(225, 225, 225, 1.0),
-              ),
-            )
-            .toList(),
-      ]),
+                        PopupMenuItem(
+                          child: ListTile(
+                            leading: Icon(Icons.edit),
+                            title: Text("Edit"),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      new EditMenuScreen(menu),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        PopupMenuDivider(),
+                        PopupMenuItem(
+                          child: ListTile(
+                            leading: Icon(Icons.delete),
+                            title: Text("Delete"),
+                            onTap: () {
+                              dataService.removeMenu(menu);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    title: Text(menu.name),
+                  );
+                },
+                body: Column(
+                  children: [
+                    Divider(),
+                    ...menu.dishes
+                        .map(
+                          (dish) => ListTile(
+                              title: Text(dish.name),
+                              trailing: Counter(),
+                              onTap: () => _showDishDetails(context, dish)),
+                        )
+                        .toList(),
+                  ],
+                ));
+          }).toList(),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         tooltip: "Add Menu",

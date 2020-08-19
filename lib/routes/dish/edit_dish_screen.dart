@@ -104,7 +104,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
                 padding: EdgeInsets.only(top: 32.0, bottom: 16.0),
                 child: Text("Ingredients", style: TextStyle(fontSize: 24.0)),
               ),
-              if(status == Status.editing)
+              if (status == Status.editing)
                 ...widget._dish.ingredients
                     .map(
                       (ingredient) => Card(
@@ -118,7 +118,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
                       ),
                     )
                     .toList(),
-              FlatButton(
+              FlatButton.icon(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -126,13 +126,8 @@ class _EditDishScreenState extends State<EditDishScreen> {
                         builder: (context) => new SearchIngredientsScreen()),
                   );
                 },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.add),
-                    Text("Add Ingredient"),
-                  ],
-                ),
+                icon: Icon(Icons.add),
+                label: Text("Add Ingredient"),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 48.0),
