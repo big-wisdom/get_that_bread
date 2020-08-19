@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
-import 'package:get_that_bread/routes/menus/edit_menus_screen.dart';
+import 'package:get_that_bread/routes/menus/edit_menu_screen.dart';
 import 'package:get_that_bread/routes/menus/widgets/dish_card.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
+import 'package:get_that_bread/widgets/counter.dart';
 import 'package:provider/provider.dart';
 
 class MenusScreen extends StatefulWidget {
@@ -46,7 +47,13 @@ class _MenuState extends State<MenusScreen> {
                   IconButton(
                     color: Colors.black.withOpacity(0.6),
                     icon: Icon(Icons.edit),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => new EditMenuScreen(menu),
+                        ),
+                      );
+                    },
                   )
                 ]),
                 children: [
@@ -54,6 +61,7 @@ class _MenuState extends State<MenusScreen> {
                       .map(
                         (dish) => ListTile(
                             title: Text(dish.name),
+                            trailing: Counter(),
                             onTap: () => _showDishDetails(context, dish)),
                       )
                       .toList(),
@@ -71,7 +79,7 @@ class _MenuState extends State<MenusScreen> {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => new EditMenusScreen(),
+                  builder: (context) => new EditMenuScreen(),
                 ),
               );
             },
