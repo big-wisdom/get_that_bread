@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get_that_bread/routes/menus/menus.dart';
-import 'package:get_that_bread/routes/shoppingList/shoppingList.dart';
+import 'package:get_that_bread/routes/menus/menus_screen.dart';
+import 'package:get_that_bread/routes/shoppingList/shopping_list_screen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,11 +8,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   static List<Widget> _widgetOptions = <Widget>[
-    Menus(),
-    ShoppingList()
+    MenusScreen(),
+    ShoppingListScreen()
   ];
 
   void _onItemTapped(int index) {
