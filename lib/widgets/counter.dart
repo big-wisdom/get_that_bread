@@ -16,13 +16,6 @@ class _CounterState extends State<Counter> {
     super.initState();
     _counter = 0;
     _controller = new TextEditingController(text: _counter.toString());
-//    _focusNode = new FocusNode();
-//    _focusNode.addListener(() {
-//      if (_focusNode.hasFocus) {
-//        _controller.selection =
-//            TextSelection(baseOffset: 0, extentOffset: _controller.text.length);
-//      }
-//    });
   }
 
   @override
@@ -45,10 +38,16 @@ class _CounterState extends State<Counter> {
     });
   }
 
-  void _updateCounter(String str) {
+  void _updateCounter(bool hasFocus) {
     setState(() {
-      _controller.text.isEmpty ? _counter = 0 : _counter = int.parse(str);
-      _controller.text = _counter.toString();
+      if (!hasFocus) {
+        if (_controller.text.isEmpty) {
+          _controller.text = '0';
+        }
+        _counter = int.parse(_controller.text);
+      } else {
+        _controller.selection = TextSelection(baseOffset: 0, extentOffset: _controller.text.length);
+      }
     });
   }
 
@@ -63,17 +62,18 @@ class _CounterState extends State<Counter> {
           ),
           Container(
             width: 30.0,
-            child: TextField(
-              controller: _controller,
-              focusNode: _focusNode,
-              onChanged: _updateCounter,
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              decoration: null,
-              maxLength: 3,
+            child: Focus(
+              onFocusChange: _updateCounter,
+              child: TextField(
+                controller: _controller,
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                decoration: null,
+                maxLength: 3,
+              ),
             ),
           ),
           IconButton(
