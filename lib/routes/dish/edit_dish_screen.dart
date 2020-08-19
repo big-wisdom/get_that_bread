@@ -123,7 +123,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => new SearchIngredientsScreen()),
+                        builder: (context) => new SearchIngredientsScreen(widget._dish)),
                   );
                 },
                 child: Row(
@@ -140,8 +140,8 @@ class _EditDishScreenState extends State<EditDishScreen> {
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       Navigator.pop(context);
+                      dataService.addDish(_createDish());
                     }
-                    dataService.addDish(_createDish());
                   },
                   child: Text('Save Dish'),
                 ),
