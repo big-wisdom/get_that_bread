@@ -104,7 +104,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
                 padding: EdgeInsets.only(top: 32.0, bottom: 16.0),
                 child: Text("Ingredients", style: TextStyle(fontSize: 24.0)),
               ),
-              if (status == Status.creating)
+              if(status == Status.editing)
                 ...widget._dish.ingredients
                     .map(
                       (ingredient) => Card(

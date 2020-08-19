@@ -41,20 +41,36 @@ class _MenuState extends State<MenusScreen> {
             .map(
               (menu) => ExpansionTile(
                 title: Row(children: [
+                  PopupMenuButton(
+                      itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                            PopupMenuItem(
+                              child: ListTile(
+                                leading: Icon(Icons.edit),
+                                title: Text("Edit"),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          new EditMenuScreen(menu),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            PopupMenuDivider(),
+                            PopupMenuItem(
+                              child: ListTile(
+                                leading: Icon(Icons.delete),
+                                title: Text("Delete"),
+                                onTap: () {
+                                  dataService.removeMenu(menu);
+                                },
+                              ),
+                            ),
+                          ]),
                   Expanded(
                     child: Text(menu.name),
                   ),
-                  IconButton(
-                    color: Colors.black.withOpacity(0.6),
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => new EditMenuScreen(menu),
-                        ),
-                      );
-                    },
-                  )
                 ]),
                 children: [
                   ...menu.dishes
@@ -71,28 +87,18 @@ class _MenuState extends State<MenusScreen> {
               ),
             )
             .toList(),
-        Container(
-          alignment: Alignment.centerLeft,
-          margin: EdgeInsets.all(16.0),
-          child: FlatButton(
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => new EditMenuScreen(),
-                ),
-              );
-            },
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.add),
-                Text("Add Menu"),
-              ],
-            ),
-          ),
-        ),
       ]),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        tooltip: "Add Menu",
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => new EditMenuScreen(),
+            ),
+          );
+        },
+      ),
     );
   }
 }

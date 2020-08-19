@@ -180,17 +180,20 @@ class DataService extends ChangeNotifier {
     print("Removing Menu");
     menus.remove(menu);
     _persistenceService.encodeMenus(menus);
+    notifyListeners();
   }
 
   void removeDish(Dish dish) {
     print("Removing Dish");
     dishes.remove(dish);
     _persistenceService.encodeDishes(dishes);
+    notifyListeners();
   }
 
   void removeIngredient(Ingredient ingredient) {
     print("Removing Ingredient");
     ingredients.remove(ingredient);
     _persistenceService.encodeIngredients(ingredients);
+    notifyListeners();
   }
 }
