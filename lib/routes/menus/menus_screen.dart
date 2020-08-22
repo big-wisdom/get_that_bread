@@ -45,29 +45,31 @@ class _MenuState extends State<MenusScreen> {
                   return ListTile(
                     leading: PopupMenuButton(
                       captureInheritedThemes: false,
+                      onSelected: (selection) {
+                        if (selection == 0) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => new EditMenuScreen(menu),
+                            ),
+                          );
+                        } else if (selection == 1) {
+                          dataService.removeMenu(menu);
+                        }
+                      },
                       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                         PopupMenuItem(
+                          value: 0,
                           child: ListTile(
                             leading: Icon(Icons.edit),
                             title: Text("Edit"),
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      new EditMenuScreen(menu),
-                                ),
-                              );
-                            },
                           ),
                         ),
                         PopupMenuDivider(),
                         PopupMenuItem(
+                          value: 1,
                           child: ListTile(
                             leading: Icon(Icons.delete),
                             title: Text("Delete"),
-                            onTap: () {
-                              dataService.removeMenu(menu);
-                            },
                           ),
                         ),
                       ],

@@ -34,7 +34,7 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
       _selectedDishes = [];
     } else {
       status = Status.editing;
-      _selectedDishes = widget._menu.dishes.map((e) => e.dish);
+      _selectedDishes = List<Dish>.from(widget._menu.dishes.map((wrapper) => wrapper.dish));
       _menuNameController.text = widget._menu.name;
     }
 
