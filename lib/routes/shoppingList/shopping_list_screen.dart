@@ -21,7 +21,7 @@ class ShoppingListScreen extends StatelessWidget {
             child: ListTile(
               title:
                   Text(dataService.shoppingList[index].ingredient.toString()),
-              trailing: Counter(),
+              trailing: Counter(0),
             ),
           );
         },

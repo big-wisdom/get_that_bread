@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Counter extends StatefulWidget {
+
+  int startingCount;
+  final void Function(int count) _onCounterUpdate;
+
+  Counter(this.startingCount, [this._onCounterUpdate]);
+
+
   @override
   _CounterState createState() => _CounterState();
 }
@@ -14,7 +21,7 @@ class _CounterState extends State<Counter> {
   @override
   void initState() {
     super.initState();
-    _counter = 0;
+    _counter = widget.startingCount;
     _controller = new TextEditingController(text: _counter.toString());
   }
 
@@ -29,6 +36,7 @@ class _CounterState extends State<Counter> {
       (_counter > 0) ? _counter-- : _counter = 0;
       _controller.text = _counter.toString();
     });
+    widget._onCounterUpdate(_counter);
   }
 
   void _increment() {
@@ -36,6 +44,7 @@ class _CounterState extends State<Counter> {
       _counter++;
       _controller.text = _counter.toString();
     });
+    widget._onCounterUpdate(_counter);
   }
 
   void _updateCounter(bool hasFocus) {
@@ -49,6 +58,7 @@ class _CounterState extends State<Counter> {
         _controller.selection = TextSelection(baseOffset: 0, extentOffset: _controller.text.length);
       }
     });
+    widget._onCounterUpdate(_counter);
   }
 
   void setCount(int count) {

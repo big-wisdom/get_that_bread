@@ -66,7 +66,7 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
                                 horizontal: 16.0, vertical: 4.0),
                             child: ListTile(
                               title: Text(ingredient.name),
-                              trailing: Counter(),
+                              trailing: Counter(0),
                             )))
                         .toList(),
                   ],
