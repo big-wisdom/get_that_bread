@@ -25,4 +25,6 @@ class Dish extends Food {
     }
     return myString;
   }
+
+  bool operator ==(o) => o is Dish && o.id == id;
 }

@@ -197,4 +197,19 @@ class DataService extends ChangeNotifier {
     _persistenceService.encodeIngredients(ingredients);
     notifyListeners();
   }
+
+  void updateMenus() {
+    _persistenceService.encodeMenus(menus);
+    notifyListeners();
+  }
+
+  void updateDishes() {
+    _persistenceService.encodeDishes(dishes);
+    notifyListeners();
+  }
+
+  void updateIngredients() {
+    _persistenceService.encodeIngredients(ingredients);
+    notifyListeners();
+  }
 }

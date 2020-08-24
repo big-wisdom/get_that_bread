@@ -34,7 +34,8 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
       _selectedDishes = [];
     } else {
       status = Status.editing;
-      _selectedDishes = List<Dish>.from(widget._menu.dishes.map((wrapper) => wrapper.dish));
+      _selectedDishes =
+          widget._menu.dishes.map((wrapper) => wrapper.dish).toList();
       _menuNameController.text = widget._menu.name;
     }
 
@@ -59,21 +60,39 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
   }
 
   void _toggleDish(Dish dishWrapper) {
-    setState(() {
-      if (_selectedDishes.contains(dishWrapper)) {
-        _selectedDishes.remove(dishWrapper);
-      } else {
-        _selectedDishes.add(dishWrapper);
-      }
-    });
+    setState(
+      () {
+        if (_selectedDishes.contains(dishWrapper)) {
+          _selectedDishes.remove(dishWrapper);
+        } else {
+          _selectedDishes.add(dishWrapper);
+        }
+      },
+    );
   }
 
-  Menu _createMenu() {
-    Menu myMenu = Menu(_menuNameController.text);
-    for (Dish myDish in _selectedDishes) {
-      myMenu.addDish(DishWrapper(count: 0, dish: myDish));
+  void _saveMenu(DataService dataService) {
+    if (status == Status.creating) {
+      Menu myMenu = Menu(_menuNameController.text);
+      dataService.addMenu(myMenu);
+    } else {
+      _editMenu();
+      dataService.updateMenus();
     }
-    return myMenu;
+  }
+
+  void _editMenu() {
+    widget._menu.name = _menuNameController.text; // edit name
+    widget._menu.dishes = _selectedDishes.map(
+      (dish) {
+        // edit dishes
+        DishWrapper dishWrapper = widget._menu.dishes.firstWhere(
+            (existingDish) => existingDish.dish == dish,
+            orElse: () => DishWrapper(
+                dish: dish, count: 1)); // check if dish already existed
+        return dishWrapper;
+      },
+    ).toList();
   }
 
   @override
@@ -171,7 +190,7 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
                     Navigator.pop(context);
-                    dataService.addMenu(_createMenu());
+                    _saveMenu(dataService);
                   }
                 },
                 child: Text('Save Menu'),
