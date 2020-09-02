@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_that_bread/model/dish/widgets/ingredient_wrapper.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
+import 'package:get_that_bread/model/menu/widgets/dish_wrapper.dart';
 import 'package:get_that_bread/routes/inventory/inventory.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
 import 'package:get_that_bread/widgets/counter.dart';

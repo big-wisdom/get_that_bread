@@ -27,7 +27,9 @@ class DataService extends ChangeNotifier {
     // clear shopping list, inventory, and needed (let shopping list page repopulate itself)
     // populate needed and inventory(all set to 0) from the menu
     print("Going Shopping");
-    needed = inventory = shoppingList = [];
+    needed = [];
+    inventory = [];
+    shoppingList = [];
     for (DishWrapper dishWrapper in menu.dishes) {
       for (IngredientWrapper iw in dishWrapper.dish.ingredients) {
         // if needed already has it, then just combine the count, don't do anything to inventory
@@ -37,6 +39,7 @@ class DataService extends ChangeNotifier {
           // otherwise add it to needed and inventory(with count 0 for inventory)
           needed.add(iw);
           iw.count = 0;
+          print("Adding ${iw.ingredient} to inventory");
           inventory.add(iw);
         }
       }
@@ -47,7 +50,7 @@ class DataService extends ChangeNotifier {
 
   void calculateShoppingList() {
     print("calculating shopping list");
-    needed.map(
+    shoppingList = needed.map(
       (need) {
         IngredientWrapper inventoryWrapper =
             inventory.firstWhere((inventoryItem) => inventoryItem == need);
