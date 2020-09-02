@@ -12,15 +12,14 @@ class Inventory extends StatelessWidget {
         title: Text("Inventory"),
       ),
       body: ListView.builder(
-        itemCount: dataService.shoppingList.length,
+        itemCount: dataService.inventory.length,
         padding: EdgeInsets.only(bottom: 100.0),
         itemBuilder: (context, index) {
           return Card(
             child: ListTile(
               leading: Icon(Icons.texture),
-              title:
-                  Text(dataService.shoppingList[index].ingredient.toString()),
-              trailing: Counter(0),
+              title: Text(dataService.inventory[index].ingredient.toString()),
+              trailing: Counter(),
             ),
           );
         },

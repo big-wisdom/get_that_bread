@@ -15,23 +15,47 @@ class DataService extends ChangeNotifier {
   List<Dish> dishes = [];
   List<Ingredient> ingredients = [];
   List<IngredientWrapper> shoppingList = [];
+  List<IngredientWrapper> needed = [];
+  List<IngredientWrapper> inventory = [];
   Menu selectedMenu;
 
   DataService() {
     _loadEverything();
   }
 
-  void populateShoppingList(Menu menu) async {
-    // TODO: Eventually pass the menu to work from to this method
-    print("Populating Shopping List");
-    shoppingList = [];
+  void goShopping(Menu menu) async {
+    // clear shopping list, inventory, and needed (let shopping list page repopulate itself)
+    // populate needed and inventory(all set to 0) from the menu
+    print("Going Shopping");
+    needed = inventory = shoppingList = [];
     for (DishWrapper dishWrapper in menu.dishes) {
       for (IngredientWrapper iw in dishWrapper.dish.ingredients) {
-        shoppingList.add(iw);
+        // if needed already has it, then just combine the count, don't do anything to inventory
+        if (needed.contains(iw)) {
+          needed[needed.indexOf(iw)].count += iw.count;
+        } else {
+          // otherwise add it to needed and inventory(with count 0 for inventory)
+          needed.add(iw);
+          iw.count = 0;
+          inventory.add(iw);
+        }
       }
     }
     await _persistenceService.encodeShoppingList(shoppingList);
     notifyListeners();
+  }
+
+  void calculateShoppingList() {
+    print("calculating shopping list");
+    needed.map(
+      (need) {
+        IngredientWrapper inventoryWrapper =
+            inventory.firstWhere((inventoryItem) => inventoryItem == need);
+        need.count -= inventoryWrapper
+            .count; // it would be kinda cool to override the operator here
+        return need;
+      },
+    ).toList();
   }
 
   void clearShoppingList() async {

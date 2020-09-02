@@ -74,6 +74,9 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
   void _saveMenu(DataService dataService) {
     if (status == Status.creating) {
       Menu myMenu = Menu(_menuNameController.text);
+      myMenu.dishes = _selectedDishes
+          .map((dish) => DishWrapper(count: 1, dish: dish))
+          .toList();
       dataService.addMenu(myMenu);
     } else {
       _editMenu();

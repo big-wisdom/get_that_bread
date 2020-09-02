@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_that_bread/model/dish/widgets/ingredient_wrapper.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
 import 'package:get_that_bread/routes/inventory/inventory.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
@@ -30,6 +31,8 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     }
     selectedMenu = dataService.selectedMenu;
 
+    dataService.calculateShoppingList();
+
     return Scaffold(
       appBar: AppBar(
         title: selectedMenu == null
@@ -57,11 +60,11 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
         shrinkWrap: true,
         itemCount: dataService.shoppingList.length,
         itemBuilder: (context, index) {
+          IngredientWrapper ingredientWrapper = dataService.shoppingList[index];
           return Card(
             child: ListTile(
-              title:
-                  Text(dataService.shoppingList[index].ingredient.toString()),
-              trailing: Counter(0),
+              title: Text(ingredientWrapper.ingredient.toString()),
+              trailing: Text("${ingredientWrapper.count}"),
             ),
           );
         },
@@ -74,7 +77,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
             context,
             MaterialPageRoute(builder: (context) => Inventory()),
           );
-          dataService.populateShoppingList(selectedMenu);
+          dataService.goShopping(selectedMenu);
         },
       ),
     );

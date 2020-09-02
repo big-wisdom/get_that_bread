@@ -42,8 +42,9 @@ class _MenuState extends State<MenusScreen> {
       ),
       body: SingleChildScrollView(
         child: ExpansionPanelList.radio(
-          children: _menus.map<ExpansionPanelRadio>((Menu menu) {
-            return ExpansionPanelRadio(
+          children: _menus.map<ExpansionPanelRadio>(
+            (Menu menu) {
+              return ExpansionPanelRadio(
                 value: menu.id,
                 headerBuilder: (BuildContext context, bool isExpanded) {
                   return ListTile(
@@ -98,8 +99,10 @@ class _MenuState extends State<MenusScreen> {
                         )
                         .toList(),
                   ],
-                ));
-          }).toList(),
+                ),
+              );
+            },
+          ).toList(),
         ),
       ),
       floatingActionButton: FloatingActionButton(
