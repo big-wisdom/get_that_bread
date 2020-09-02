@@ -15,6 +15,7 @@ class DataService extends ChangeNotifier {
   List<Dish> dishes = [];
   List<Ingredient> ingredients = [];
   List<IngredientWrapper> shoppingList = [];
+  Menu selectedMenu;
 
   DataService() {
     _loadEverything();
@@ -29,6 +30,12 @@ class DataService extends ChangeNotifier {
         shoppingList.add(iw);
       }
     }
+    await _persistenceService.encodeShoppingList(shoppingList);
+    notifyListeners();
+  }
+
+  void clearShoppingList() async {
+    shoppingList = [];
     await _persistenceService.encodeShoppingList(shoppingList);
     notifyListeners();
   }
