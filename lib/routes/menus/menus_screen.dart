@@ -28,6 +28,10 @@ class _MenuState extends State<MenusScreen> {
     );
   }
 
+  void _printDishCounter(int count) {
+
+  }
+
   @override
   Widget build(BuildContext context) {
     DataService dataService = Provider.of<DataService>(context);
@@ -84,7 +88,11 @@ class _MenuState extends State<MenusScreen> {
                         .map(
                           (dishWrapper) => ListTile(
                               title: Text(dishWrapper.dish.name),
-                              trailing: Counter(),
+                              trailing: Counter(dishWrapper.count, (int count) {
+                                dishWrapper.count = count;
+                                debugPrint(dishWrapper.count.toString());
+                                debugPrint(count.toString());
+                              }),
                               onTap: () =>
                                   _showDishDetails(context, dishWrapper.dish)),
                         )

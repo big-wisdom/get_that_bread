@@ -20,7 +20,7 @@ class Inventory extends StatelessWidget {
               leading: Icon(Icons.texture),
               title:
                   Text(dataService.shoppingList[index].ingredient.toString()),
-              trailing: Counter(),
+              trailing: Counter(0),
             ),
           );
         },
