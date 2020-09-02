@@ -19,7 +19,7 @@ class Inventory extends StatelessWidget {
             child: ListTile(
               leading: Icon(Icons.texture),
               title: Text(dataService.inventory[index].ingredient.toString()),
-              trailing: Counter(),
+              trailing: Counter(dataService.inventory[index].count),
             ),
           );
         },
