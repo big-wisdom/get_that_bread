@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get_that_bread/model/menu/menu.dart';
 import 'package:get_that_bread/routes/inventory/inventory.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
 import 'package:get_that_bread/widgets/counter.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingListScreen extends StatelessWidget {
+  Menu selectedMenu;
+
   @override
   Widget build(BuildContext context) {
     DataService dataService = Provider.of<DataService>(context);
+    selectedMenu = dataService.menus[0];
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Shopping List"),
@@ -34,7 +39,7 @@ class ShoppingListScreen extends StatelessWidget {
             context,
             MaterialPageRoute(builder: (context) => Inventory()),
           );
-          dataService.populateShoppingList();
+          dataService.populateShoppingList(selectedMenu);
         },
       ),
     );

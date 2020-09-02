@@ -86,11 +86,10 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
     widget._menu.dishes = _selectedDishes.map(
       (dish) {
         // edit dishes
-        DishWrapper dishWrapper = widget._menu.dishes.firstWhere(
+        return widget._menu.dishes.firstWhere(
             (existingDish) => existingDish.dish == dish,
             orElse: () => DishWrapper(
                 dish: dish, count: 1)); // check if dish already existed
-        return dishWrapper;
       },
     ).toList();
   }

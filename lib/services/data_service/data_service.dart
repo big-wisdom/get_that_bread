@@ -20,10 +20,9 @@ class DataService extends ChangeNotifier {
     _loadEverything();
   }
 
-  void populateShoppingList() async {
+  void populateShoppingList(Menu menu) async {
     // TODO: Eventually pass the menu to work from to this method
     print("Populating Shopping List");
-    Menu menu = menus[0];
     shoppingList = [];
     for (DishWrapper dishWrapper in menu.dishes) {
       for (IngredientWrapper iw in dishWrapper.dish.ingredients) {
@@ -98,6 +97,10 @@ class DataService extends ChangeNotifier {
   }
 
   void addMenu(Menu menu) {
+    // don't worry about menu already existing, auto complete on the title should handle that
+    // add menu to menus list
+    // add each dish to dishes list (which would mean that each dish is stored in the menu itself)
+    // notifyListeners
     print("Adding Menu");
     menus.add(menu);
     for (DishWrapper dishWrapper in menu.dishes) {
@@ -107,7 +110,12 @@ class DataService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addDish(Dish dish) {
+  Future<void> addDish(Dish dish) async {
+    // check if dish is in dishes list already
+    // if not,
+    //add dish to dishes list
+    // add all ingredients to ingredients list
+    // notify listeners
     print("Adding Dish");
     dishes.add(dish);
     for (IngredientWrapper ingredient in dish.ingredients) {
@@ -118,11 +126,28 @@ class DataService extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addDishToMenu(Menu menu, DishWrapper dishWrapper) {
+    menu.addDish(dishWrapper);
+    addDish(dishWrapper.dish); // this will call notify listeners
+    _persistenceService.encodeMenus(menus);
+  }
+
   void addIngredient(Ingredient ingredient) {
+    // check if ingredient exists
+    // if not
+    // add it to the ingredients list
+    // encode ingredients
+    // notify listeners
     print("Adding Ingredient");
     ingredients.add(ingredient);
     _persistenceService.encodeIngredients(ingredients);
     notifyListeners();
+  }
+
+  void addIngredientToDish(Dish dish, IngredientWrapper ingredientWrapper) {
+    dish.addIngredient(ingredientWrapper);
+    addIngredient(
+        ingredientWrapper.ingredient); // this will call notify listeners
   }
 
   void addToShoppingList(IngredientWrapper ingredient) {

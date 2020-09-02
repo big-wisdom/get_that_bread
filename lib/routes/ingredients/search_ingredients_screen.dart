@@ -19,13 +19,16 @@ class SearchIngredientsScreen extends StatefulWidget {
 
 class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
   List<Ingredient> _ingredients;
-  List<IngredientWrapper> _selectedIngredients;
+  List<Ingredient> _selectedIngredients;
 
   @override
   void initState() {
     _ingredients = [];
     if (widget._dish != null) {
-      _selectedIngredients = widget._dish.ingredients;
+      _selectedIngredients =
+          widget._dish.ingredients.map((iw) => iw.ingredient);
+    } else {
+      _selectedIngredients = [];
     }
 
     super.initState();
@@ -62,11 +65,13 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
                   children: [
                     ..._ingredients
                         .map((ingredient) => Card(
+                            color: _selectedIngredients.contains(ingredient)
+                                ? Colors.lightBlueAccent
+                                : Colors.white,
                             margin: EdgeInsets.symmetric(
                                 horizontal: 16.0, vertical: 4.0),
                             child: ListTile(
                               title: Text(ingredient.name),
-                              trailing: Counter(),
                             )))
                         .toList(),
                   ],
