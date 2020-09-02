@@ -1,22 +1,27 @@
 [
   {
     "name": "noods",
-    "id": "nood"
+    "id": "nood",
+    "unit": "box"
   },
   {
     "name": "Sawce",
-    "id": "SawcyID"
+    "id": "SawcyID",
+    "unit": "jar"
   },
   {
     "name": "das essen",
-    "id": "essen"
+    "id": "essen",
+    "unit": "food"
   },
   {
     "name": "das bun?",
-    "id": "BunsID"
+    "id": "BunsID",
+    "unit": "bag of 8"
   },
   {
     "name": "Eggs Probably",
-    "id": "NothingSuspiciousHere"
+    "id": "NothingSuspiciousHere",
+    "unit": "dozen"
   }
 ]
