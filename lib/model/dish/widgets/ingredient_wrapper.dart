@@ -12,4 +12,6 @@ class IngredientWrapper {
   Ingredient ingredient;
   int count;
   IngredientWrapper({@required this.ingredient, @required this.count});
+  bool operator ==(o) =>
+      o is IngredientWrapper && o.ingredient.id == ingredient.id;
 }

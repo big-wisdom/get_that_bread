@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/routes/ingredients/search_ingredients_screen.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
+import 'package:get_that_bread/widgets/counter.dart';
 import 'package:provider/provider.dart';
 
 class EditDishScreen extends StatefulWidget {
@@ -117,9 +118,12 @@ class _EditDishScreenState extends State<EditDishScreen> {
                     (ingredientWrapper) => Card(
                       child: ListTile(
                         title: Text(ingredientWrapper.ingredient.toString()),
-                        trailing: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.delete),
+                        trailing: Counter(
+                          ingredientWrapper.count,
+                          (count) {
+                            ingredientWrapper.count = count;
+                            dataService.updateMenus();
+                          },
                         ),
                       ),
                     ),

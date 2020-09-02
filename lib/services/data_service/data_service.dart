@@ -23,7 +23,7 @@ class DataService extends ChangeNotifier {
     _loadEverything();
   }
 
-  void goShopping(Menu menu) async {
+  void goShopping(Menu menu) {
     // clear shopping list, inventory, and needed (let shopping list page repopulate itself)
     // populate needed and inventory(all set to 0) from the menu
     print("Going Shopping");
@@ -38,27 +38,39 @@ class DataService extends ChangeNotifier {
         } else {
           // otherwise add it to needed and inventory(with count 0 for inventory)
           needed.add(iw);
-          iw.count = 0;
+
           print("Adding ${iw.ingredient} to inventory");
-          inventory.add(iw);
+          inventory.add(
+            IngredientWrapper(
+              ingredient: iw.ingredient,
+              count: 0,
+            ),
+          );
         }
       }
     }
-    await _persistenceService.encodeShoppingList(shoppingList);
+    _persistenceService.encodeShoppingList(shoppingList);
     notifyListeners();
   }
 
   void calculateShoppingList() {
     print("calculating shopping list");
-    shoppingList = needed.map(
-      (need) {
-        IngredientWrapper inventoryWrapper =
-            inventory.firstWhere((inventoryItem) => inventoryItem == need);
-        need.count -= inventoryWrapper
-            .count; // it would be kinda cool to override the operator here
-        return need;
-      },
-    ).toList();
+    if (needed.length > 0) {
+      shoppingList = needed.map(
+        (need) {
+          IngredientWrapper inventoryWrapper = inventory.firstWhere(
+            (inventoryItem) => inventoryItem == need,
+            orElse: () {
+              throw Exception(
+                  "uh oh needed list doesn't match inventory list.");
+            },
+          );
+          need.count -= inventoryWrapper
+              .count; // it would be kinda cool to override the operator here
+          return need;
+        },
+      ).toList();
+    }
   }
 
   void clearShoppingList() async {
