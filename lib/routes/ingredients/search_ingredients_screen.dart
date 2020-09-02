@@ -4,13 +4,12 @@ import 'package:get_that_bread/model/dish/widgets/ingredient_wrapper.dart';
 import 'package:get_that_bread/model/ingredient/ingredient.dart';
 import 'package:get_that_bread/routes/ingredients/edit_ingredients_screen.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
-import 'package:get_that_bread/widgets/counter.dart';
 import 'package:provider/provider.dart';
 
 class SearchIngredientsScreen extends StatefulWidget {
   final Dish _dish;
 
-  SearchIngredientsScreen([this._dish]);
+  SearchIngredientsScreen(this._dish);
 
   @override
   _SearchIngredientsScreenState createState() =>
@@ -24,12 +23,9 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
   @override
   void initState() {
     _ingredients = [];
-    if (widget._dish != null) {
-      _selectedIngredients =
-          widget._dish.ingredients.map((iw) => iw.ingredient);
-    } else {
-      _selectedIngredients = [];
-    }
+
+    _selectedIngredients =
+        widget._dish.ingredients.map((iw) => iw.ingredient).toList();
 
     super.initState();
   }
@@ -44,6 +40,19 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
         }
       },
     );
+  }
+
+  void _saveIngredients(DataService dataService) {
+    List<IngredientWrapper> newIngredients = _selectedIngredients.map(
+      (i) {
+        return widget._dish.ingredients.firstWhere(
+          (iw) => iw.ingredient == i,
+          orElse: () => IngredientWrapper(ingredient: i, count: 1),
+        );
+      },
+    ).toList();
+
+    dataService.addIngredientsToDish(widget._dish, newIngredients);
   }
 
   @override
@@ -111,7 +120,10 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
                   icon: Icon(Icons.add),
                 ),
                 RaisedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _saveIngredients(dataService);
+                    Navigator.pop(context);
+                  },
                   child: Text("Save Ingredients"),
                 ),
               ],

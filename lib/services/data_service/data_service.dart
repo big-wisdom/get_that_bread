@@ -110,17 +110,17 @@ class DataService extends ChangeNotifier {
     notifyListeners();
   }
 
+  // updates dish if it already exists
+  // creates it if it doesn't
   Future<void> addDish(Dish dish) async {
-    // check if dish is in dishes list already
-    // if not,
-    //add dish to dishes list
-    // add all ingredients to ingredients list
-    // notify listeners
-    print("Adding Dish");
-    dishes.add(dish);
+    if (dishes.contains(dish)) {
+      dishes[dishes.indexOf(dish)] = dish;
+    } else {
+      dishes.add(dish);
+    }
+
     for (IngredientWrapper ingredient in dish.ingredients) {
-      if (!ingredients.contains(ingredient))
-        addIngredient(ingredient.ingredient);
+      addIngredient(ingredient.ingredient);
     }
     _persistenceService.encodeDishes(dishes);
     notifyListeners();
@@ -132,22 +132,41 @@ class DataService extends ChangeNotifier {
     _persistenceService.encodeMenus(menus);
   }
 
+  // go through all menus to update their versions of a dish
+  // go through all dishes to update their versions of a dish
+  void updateOrAddDish(Dish dish) {
+    _updateDishInMenus(dish);
+    addDish(dish);
+  }
+
+  void _updateDishInMenus(Dish dish) {
+    // search each menu for dish
+    for (Menu menu in menus) {
+      for (DishWrapper menuDW in menu.dishes) {
+        if (menuDW.dish == dish) menuDW.dish = dish; // update it if it exists
+      }
+    }
+
+    // encode menus
+    updateMenus(); // this will call notifyListeners
+  }
+
   void addIngredient(Ingredient ingredient) {
-    // check if ingredient exists
-    // if not
-    // add it to the ingredients list
-    // encode ingredients
-    // notify listeners
-    print("Adding Ingredient");
-    ingredients.add(ingredient);
+    if (ingredients.contains(ingredient)) {
+      ingredients[ingredients.indexOf(ingredient)] = ingredient;
+    } else {
+      ingredients.add(ingredient);
+    }
+
     _persistenceService.encodeIngredients(ingredients);
     notifyListeners();
   }
 
-  void addIngredientToDish(Dish dish, IngredientWrapper ingredientWrapper) {
-    dish.addIngredient(ingredientWrapper);
-    addIngredient(
-        ingredientWrapper.ingredient); // this will call notify listeners
+  void addIngredientsToDish(Dish dish, List<IngredientWrapper> ingredients) {
+    dish.ingredients = ingredients;
+    for (IngredientWrapper iw in ingredients) {
+      addIngredient(iw.ingredient); // this will call notify listeners
+    }
   }
 
   void addToShoppingList(IngredientWrapper ingredient) {

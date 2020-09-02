@@ -20,6 +20,8 @@ class _EditDishScreenState extends State<EditDishScreen> {
   TextEditingController _dishNameController;
   TextEditingController _dishDescriptionController;
   Status status;
+  // make working dish here
+  Dish _workingDish = Dish("New Dish", "Probably Delicious");
 
   @override
   void initState() {
@@ -30,6 +32,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
       status = Status.creating;
     } else {
       status = Status.editing;
+      _workingDish = widget._dish;
       _dishNameController.text = widget._dish.name;
       _dishDescriptionController.text = widget._dish.description;
     }
@@ -56,8 +59,13 @@ class _EditDishScreenState extends State<EditDishScreen> {
     });
   }
 
-  Dish _createDish() {
-    return Dish(_dishNameController.text, _dishDescriptionController.text);
+  Dish _saveDish(DataService dataService) {
+    // set working dish name
+    _workingDish.name = _dishNameController.text;
+    // set working dish description
+    _workingDish.description = _dishDescriptionController.text;
+
+    dataService.updateOrAddDish(_workingDish);
   }
 
   @override
@@ -104,26 +112,27 @@ class _EditDishScreenState extends State<EditDishScreen> {
                 padding: EdgeInsets.only(top: 32.0, bottom: 16.0),
                 child: Text("Ingredients", style: TextStyle(fontSize: 24.0)),
               ),
-              if (status == Status.editing)
-                ...widget._dish.ingredients
-                    .map(
-                      (ingredient) => Card(
-                        child: ListTile(
-                          title: Text(ingredient.toString()),
-                          trailing: IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.delete),
-                          ),
+              ..._workingDish.ingredients
+                  .map(
+                    (ingredientWrapper) => Card(
+                      child: ListTile(
+                        title: Text(ingredientWrapper.ingredient.toString()),
+                        trailing: IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.delete),
                         ),
                       ),
-                    )
-                    .toList(),
+                    ),
+                  )
+                  .toList(),
               FlatButton.icon(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => new SearchIngredientsScreen()),
+                      builder: (context) =>
+                          new SearchIngredientsScreen(_workingDish),
+                    ),
                   );
                 },
                 icon: Icon(Icons.add),
@@ -135,7 +144,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       Navigator.pop(context);
-                      dataService.addDish(_createDish());
+                      _saveDish(dataService);
                     }
                   },
                   child: Text('Save Dish'),
