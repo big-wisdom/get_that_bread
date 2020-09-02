@@ -34,6 +34,18 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
     super.initState();
   }
 
+  void _toggleIngredient(Ingredient ingredient) {
+    setState(
+      () {
+        if (_selectedIngredients.contains(ingredient)) {
+          _selectedIngredients.remove(ingredient);
+        } else {
+          _selectedIngredients.add(ingredient);
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     DataService dataService = Provider.of<DataService>(context);
@@ -64,15 +76,21 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
                   shrinkWrap: true,
                   children: [
                     ..._ingredients
-                        .map((ingredient) => Card(
+                        .map(
+                          (ingredient) => Card(
                             color: _selectedIngredients.contains(ingredient)
                                 ? Colors.lightBlueAccent
                                 : Colors.white,
                             margin: EdgeInsets.symmetric(
                                 horizontal: 16.0, vertical: 4.0),
-                            child: ListTile(
-                              title: Text(ingredient.name),
-                            )))
+                            child: InkWell(
+                              onTap: () => _toggleIngredient(ingredient),
+                              child: ListTile(
+                                title: Text(ingredient.name),
+                              ),
+                            ),
+                          ),
+                        )
                         .toList(),
                   ],
                 ),
