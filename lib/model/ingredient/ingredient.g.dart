@@ -8,7 +8,8 @@ part of 'ingredient.dart';
 
 Ingredient _$IngredientFromJson(Map<String, dynamic> json) {
   return Ingredient(
-    json['name'] as String,
+    name: json['name'] as String,
+    unit: json['unit'] as String,
   )..id = json['id'] as String;
 }
 
@@ -16,4 +17,5 @@ Map<String, dynamic> _$IngredientToJson(Ingredient instance) =>
     <String, dynamic>{
       'name': instance.name,
       'id': instance.id,
+      'unit': instance.unit,
     };

@@ -13,6 +13,8 @@ enum Status { creating, editing }
 class _EditIngredientsScreenState extends State<EditIngredientsScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _ingredientNameController;
+  TextEditingController _ingredientUnitController;
+
   Status status;
 
   void _updateName(String str) {
@@ -20,7 +22,6 @@ class _EditIngredientsScreenState extends State<EditIngredientsScreen> {
       _ingredientNameController.text = str;
     });
   }
-
 
   @override
   void initState() {
@@ -34,43 +35,59 @@ class _EditIngredientsScreenState extends State<EditIngredientsScreen> {
     DataService dataService = Provider.of<DataService>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Create New Ingredient"),
-      ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: TextFormField(
-                controller: _ingredientNameController,
-                onFieldSubmitted: _updateName,
-                decoration: InputDecoration(labelText: 'Ingredient Name'),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter a ingredient name';
-                  }
-                  return null;
-                },
+        appBar: AppBar(
+          title: Text("Create New Ingredient"),
+        ),
+        body: Form(
+            key: _formKey,
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: TextFormField(
+                  controller: _ingredientNameController,
+                  onFieldSubmitted: _updateName,
+                  decoration: InputDecoration(labelText: 'Ingredient Name'),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter a ingredient name';
+                    }
+                    return null;
+                  },
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: RaisedButton(
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    Navigator.pop(context);
-                    dataService.addIngredient(Ingredient(_ingredientNameController.text));
-                  }
-                },
-                child: Text('Save Ingredient'),
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: TextFormField(
+                  controller: _ingredientUnitController,
+                  onFieldSubmitted: _updateName,
+                  decoration:
+                      InputDecoration(labelText: 'Ingredient Unit of Purchase'),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Enter the unit you purchase this item in';
+                    }
+                    return null;
+                  },
+                ),
               ),
-            ),
-          ]
-        )
-      )
-    );
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: RaisedButton(
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      Navigator.pop(context);
+                      dataService.addIngredient(
+                        Ingredient(
+                          name: _ingredientNameController.text,
+                          unit: _ingredientUnitController.text,
+                        ),
+                      );
+                    }
+                  },
+                  child: Text('Save Ingredient'),
+                ),
+              ),
+            ])));
   }
 }
