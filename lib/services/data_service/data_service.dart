@@ -34,10 +34,12 @@ class DataService extends ChangeNotifier {
       for (IngredientWrapper iw in dishWrapper.dish.ingredients) {
         // if needed already has it, then just combine the count, don't do anything to inventory
         if (needed.contains(iw)) {
-          needed[needed.indexOf(iw)].count += iw.count;
+          needed[needed.indexOf(iw)].count += (iw.count * dishWrapper.count);
         } else {
           // otherwise add it to needed and inventory(with count 0 for inventory)
-          needed.add(iw);
+          int amountNeeded = dishWrapper.count * iw.count;
+          needed.add(IngredientWrapper(
+              ingredient: iw.ingredient, count: amountNeeded));
 
           print("Adding ${iw.ingredient} to inventory");
           inventory.add(
@@ -54,23 +56,26 @@ class DataService extends ChangeNotifier {
   }
 
   void calculateShoppingList() {
-    print("calculating shopping list");
-    if (needed.length > 0) {
-      shoppingList = needed.map(
-        (need) {
-          IngredientWrapper inventoryWrapper = inventory.firstWhere(
-            (inventoryItem) => inventoryItem == need,
-            orElse: () {
-              throw Exception(
-                  "uh oh needed list doesn't match inventory list.");
-            },
-          );
-          need.count -= inventoryWrapper
-              .count; // it would be kinda cool to override the operator here
-          return need;
-        },
-      ).toList();
+    shoppingList = [];
+    for (IngredientWrapper need in needed) {
+      IngredientWrapper inventoryItem =
+          inventory.firstWhere((iw) => iw == need, orElse: () {
+        throw Exception(
+          "Uh oh! Your needed list doesn't match your inventory list",
+        );
+      });
+      int numberNeeded = need.count - inventoryItem.count;
+      shoppingList.add(
+        IngredientWrapper(
+          ingredient: need.ingredient,
+          count: numberNeeded,
+        ),
+      );
     }
+  }
+
+  void callNotifyListeners() {
+    notifyListeners();
   }
 
   void clearShoppingList() async {

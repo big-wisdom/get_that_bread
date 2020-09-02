@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_that_bread/model/dish/widgets/ingredient_wrapper.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
 import 'package:get_that_bread/widgets/counter.dart';
 import 'package:provider/provider.dart';
@@ -15,11 +16,19 @@ class Inventory extends StatelessWidget {
         itemCount: dataService.inventory.length,
         padding: EdgeInsets.only(bottom: 100.0),
         itemBuilder: (context, index) {
+          IngredientWrapper inventoryItem = dataService.inventory[index];
           return Card(
             child: ListTile(
               leading: Icon(Icons.texture),
-              title: Text(dataService.inventory[index].ingredient.toString()),
-              trailing: Counter(dataService.inventory[index].count),
+              title: Text(inventoryItem.ingredient.toString()),
+              trailing: Counter(
+                inventoryItem.count,
+                (count) {
+                  inventoryItem.count = count;
+                  dataService.calculateShoppingList();
+                  dataService.callNotifyListeners();
+                },
+              ),
             ),
           );
         },
