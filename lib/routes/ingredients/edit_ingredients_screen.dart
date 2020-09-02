@@ -17,15 +17,10 @@ class _EditIngredientsScreenState extends State<EditIngredientsScreen> {
 
   Status status;
 
-  void _updateName(String str) {
-    setState(() {
-      _ingredientNameController.text = str;
-    });
-  }
-
   @override
   void initState() {
     _ingredientNameController = new TextEditingController();
+    _ingredientUnitController = new TextEditingController();
 
     super.initState();
   }
@@ -46,7 +41,6 @@ class _EditIngredientsScreenState extends State<EditIngredientsScreen> {
                 padding: EdgeInsets.all(16.0),
                 child: TextFormField(
                   controller: _ingredientNameController,
-                  onFieldSubmitted: _updateName,
                   decoration: InputDecoration(labelText: 'Ingredient Name'),
                   validator: (value) {
                     if (value.isEmpty) {
@@ -60,7 +54,6 @@ class _EditIngredientsScreenState extends State<EditIngredientsScreen> {
                 padding: EdgeInsets.all(16.0),
                 child: TextFormField(
                   controller: _ingredientUnitController,
-                  onFieldSubmitted: _updateName,
                   decoration:
                       InputDecoration(labelText: 'Ingredient Unit of Purchase'),
                   validator: (value) {

@@ -24,6 +24,7 @@ class DataService extends ChangeNotifier {
   }
 
   void goShopping(Menu menu) {
+    if (menu == null) return;
     // clear shopping list, inventory, and needed (let shopping list page repopulate itself)
     // populate needed and inventory(all set to 0) from the menu
     print("Going Shopping");
