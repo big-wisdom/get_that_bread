@@ -57,19 +57,20 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
               ),
       ),
       body: ListView.builder(
-        padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 100.0),
-        shrinkWrap: true,
-        itemCount: dataService.shoppingList.length,
-        itemBuilder: (context, index) {
-          IngredientWrapper ingredientWrapper = dataService.shoppingList[index];
-          return Card(
-            child: ListTile(
-              title: Text(ingredientWrapper.ingredient.toString()),
-              trailing: Text("${ingredientWrapper.count}"),
-            ),
-          );
-        },
-      ),
+          padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 100.0),
+          shrinkWrap: true,
+          itemCount: dataService.shoppingList.length,
+          itemBuilder: (context, index) {
+            IngredientWrapper ingredientWrapper =
+                dataService.shoppingList[index];
+            return Card(
+              child: ListTile(
+                title: Text(ingredientWrapper.ingredient.toString()),
+                trailing: Text(
+                    "${ingredientWrapper.count} ${ingredientWrapper.ingredient.unit}"),
+              ),
+            );
+          }),
       floatingActionButton: FloatingActionButton.extended(
         label: Text("Go Shopping"),
         icon: Icon(Icons.shopping_cart),
