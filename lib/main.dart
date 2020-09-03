@@ -20,6 +20,7 @@ class GetThatBread extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        brightness: Brightness.dark
       ),
       home: Home(),
     );

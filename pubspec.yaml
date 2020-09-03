@@ -57,6 +57,7 @@ flutter:
 
   assets:
     - images/meal.png
+    - images/pancakes.jpg
     - data/
   # To add assets to your application, add an assets section, like this:
   # assets:

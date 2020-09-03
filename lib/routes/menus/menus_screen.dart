@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
+import 'package:get_that_bread/routes/dish/edit_dish_screen2.dart';
 import 'package:get_that_bread/routes/menus/edit_menu_screen.dart';
 import 'package:get_that_bread/routes/menus/widgets/dish_card.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
@@ -18,14 +19,20 @@ class _MenuState extends State<MenusScreen> {
   List<Menu> _menus = [];
 
   void _showDishDetails(BuildContext context, Dish dish) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return DishCard(dish);
-      },
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => new EditDishScreen2(dish),
+      ),
     );
+
+    // showModalBottomSheet(
+    //   context: context,
+    //   backgroundColor: Colors.transparent,
+    //   isScrollControlled: true,
+    //   builder: (BuildContext context) {
+    //     return DishCard(dish);
+    //   },
+    // );
   }
 
   void _printDishCounter(int count) {}
