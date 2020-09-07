@@ -67,7 +67,8 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
               child: ListTile(
                 title: Text(ingredientWrapper.ingredient.toString()),
                 trailing: Text(
-                    "${ingredientWrapper.count} ${ingredientWrapper.ingredient.unit}"),
+                  "${ingredientWrapper.count} ${ingredientWrapper.ingredient.unit}",
+                ),
               ),
             );
           }),
