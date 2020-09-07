@@ -25,6 +25,7 @@ class _InventoryCardState extends State<InventoryCard> {
             child: Icon(Icons.texture),
           ),
           Expanded(
+            flex: 3,
             child: AdaptableText(
               widget._inventoryItem.ingredient.name,
               style: TextStyle(
@@ -40,8 +41,8 @@ class _InventoryCardState extends State<InventoryCard> {
               widget._dataService.callNotifyListeners();
             },
           ),
-          SizedBox(
-            width: 70,
+          Expanded(
+            flex: 2,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: AdaptableText(widget._inventoryItem.ingredient.unit),
