@@ -16,36 +16,39 @@ class InventoryCard extends StatefulWidget {
 class _InventoryCardState extends State<InventoryCard> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Icon(Icons.texture),
-        ),
-        Expanded(
-          child: AdaptableText(
-            widget._inventoryItem.ingredient.name,
-            style: TextStyle(
-              fontSize: 18,
+    return Card(
+      margin: EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(Icons.texture),
+          ),
+          Expanded(
+            child: AdaptableText(
+              widget._inventoryItem.ingredient.name,
+              style: TextStyle(
+                fontSize: 18,
+              ),
             ),
           ),
-        ),
-        Counter(
-          widget._inventoryItem.count,
-          (count) {
-            widget._inventoryItem.count = count;
-            widget._dataService.calculateShoppingList();
-            widget._dataService.callNotifyListeners();
-          },
-        ),
-        SizedBox(
-          width: 70,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: AdaptableText(widget._inventoryItem.ingredient.unit),
+          Counter(
+            widget._inventoryItem.count,
+            (count) {
+              widget._inventoryItem.count = count;
+              widget._dataService.calculateShoppingList();
+              widget._dataService.callNotifyListeners();
+            },
           ),
-        ),
-      ],
+          SizedBox(
+            width: 70,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AdaptableText(widget._inventoryItem.ingredient.unit),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

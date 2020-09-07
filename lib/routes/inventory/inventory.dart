@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get_that_bread/model/dish/widgets/ingredient_wrapper.dart';
 import 'package:get_that_bread/routes/inventory/widgets/inventory_card.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
-import 'package:get_that_bread/widgets/counter.dart';
 import 'package:provider/provider.dart';
 
 class Inventory extends StatelessWidget {
@@ -18,10 +17,7 @@ class Inventory extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 100.0),
         itemBuilder: (context, index) {
           IngredientWrapper inventoryItem = dataService.inventory[index];
-          return Card(
-            margin: EdgeInsets.all(12.0),
-            child: InventoryCard(inventoryItem, dataService),
-          );
+          return InventoryCard(inventoryItem, dataService);
         },
       ),
     );
