@@ -103,9 +103,10 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
     _dishes = dataService.dishes;
     return Scaffold(
       appBar: AppBar(
-          title: (status == Status.creating)
-              ? Text("Create New Menu")
-              : Text("Edit Menu")),
+        title: (status == Status.creating)
+            ? Text("Create New Menu")
+            : Text("Edit Menu"),
+      ),
       body: Form(
         key: _formKey,
         child: Column(
@@ -131,71 +132,40 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
             ),
             Expanded(
               child: _dishes.isEmpty
-                  ? Center(child: Text("You Have No Dishes Yet!"))
-                  : GridView.extent(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      shrinkWrap: true,
-                      maxCrossAxisExtent: 200.0,
-                      children: [
-                        ..._dishes
-                            .map(
-                              (dish) => Card(
-                                color: (_selectedDishes.contains(dish))
-                                    ? Colors.lightBlueAccent
-                                    : Colors.white,
-                                child: InkWell(
-                                  onTap: () => _toggleDish(dish),
-                                  onLongPress: () =>
-                                      _showDishDetails(context, dish),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(bottom: 8.0),
-                                          child: Text(
-                                            dish.name,
-                                            style: TextStyle(fontSize: 18.0),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            dish.description,
-                                            overflow: TextOverflow.fade,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      ],
+                  ? Center(
+                      child: Text("You Have No Meals Yet! Create Some!"),
+                    )
+                  : ListView.builder(
+                      itemCount: _dishes.length,
+                      itemBuilder: (context, index) {
+                        Dish dish = _dishes[index];
+                        return ListTile(
+                          title: Text(dish.name),
+                          trailing: IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {},
+                          ),
+                        );
+                      },
                     ),
             ),
             Padding(
-              padding: EdgeInsets.all(16.0),
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditDishScreen()));
-                },
-                child: Text('Create Dish'),
+              padding: EdgeInsets.fromLTRB(16, 8, 16, 4),
+              child: OutlineButton(
+                child: Text("Add Dish To Menu"),
+                onPressed: () {},
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(16.0),
-              child: RaisedButton(
+              padding: EdgeInsets.fromLTRB(16, 4, 16, 16),
+              child: OutlineButton(
+                child: Text("Create New Dish"),
                 onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    Navigator.pop(context);
-                    _saveMenu(dataService);
-                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EditDishScreen()),
+                  );
                 },
-                child: Text('Save Menu'),
               ),
             ),
           ],

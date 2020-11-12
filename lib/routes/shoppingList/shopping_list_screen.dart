@@ -14,6 +14,7 @@ class ShoppingListScreen extends StatefulWidget {
 
 class _ShoppingListScreenState extends State<ShoppingListScreen> {
   Menu selectedMenu;
+  bool inventoryTaken = false;
 
   void _menuChange(Menu menu, DataService dataService) {
     selectedMenu = menu;
@@ -35,43 +36,50 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     dataService.calculateShoppingList();
 
     return Scaffold(
-      appBar: AppBar(
-        title: selectedMenu == null
-            ? Text("No Menus Created Yet!")
-            : DropdownButton(
-                value: selectedMenu,
-                items: dataService.menus
-                    .map(
-                      (menu) => DropdownMenuItem(
-                        value: menu,
-                        child: Text(
-                          menu.name,
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (menu) {
-                  setState(() => _menuChange(menu, dataService));
-                },
-              ),
-      ),
-      body: ListView.builder(
-          padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 100.0),
-          shrinkWrap: true,
-          itemCount: dataService.shoppingList.length,
-          itemBuilder: (context, index) {
-            IngredientWrapper ingredientWrapper =
-                dataService.shoppingList[index];
-            return Card(
-              child: ListTile(
-                title: Text(ingredientWrapper.ingredient.toString()),
-                trailing: Text(
-                  "${ingredientWrapper.count} ${ingredientWrapper.ingredient.unit}",
+      appBar: AppBar(title: Text("Shopping List")),
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(32, 8, 32, 0),
+          child: DropdownButton(
+            hint: selectedMenu == null
+                ? Text("No Menus")
+                : Text(selectedMenu.name),
+            value: selectedMenu,
+            items: dataService.menus
+                .map(
+                  (menu) => DropdownMenuItem(
+                    value: menu,
+                    child: Text(
+                      menu.name,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                )
+                .toList(),
+            onChanged: (menu) {
+              setState(() => _menuChange(menu, dataService));
+            },
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 100.0),
+            itemCount: dataService.shoppingList.length,
+            itemBuilder: (context, index) {
+              IngredientWrapper ingredientWrapper =
+                  dataService.shoppingList[index];
+              return Card(
+                child: ListTile(
+                  title: Text(ingredientWrapper.ingredient.toString()),
+                  trailing: Text(
+                    "${ingredientWrapper.count} ${ingredientWrapper.ingredient.unit}",
+                  ),
                 ),
-              ),
-            );
-          }),
+              );
+            },
+          ),
+        ),
+      ]),
       floatingActionButton: FloatingActionButton.extended(
         label: Text("Go Shopping"),
         icon: Icon(Icons.shopping_cart),

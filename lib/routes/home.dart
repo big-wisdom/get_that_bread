@@ -8,11 +8,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
-    MenusScreen(),
-    ShoppingListScreen()
+    ShoppingListScreen(),
+    MenusScreen()
   ];
 
   void _onItemTapped(int index) {
@@ -30,11 +30,11 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+              icon: Icon(Icons.list), title: Text("Shopping List")),
+          BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
             title: Text("Menus"),
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.list), title: Text("Shopping List"))
+          )
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

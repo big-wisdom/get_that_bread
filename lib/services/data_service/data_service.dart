@@ -3,6 +3,7 @@ import 'package:fuzzy/fuzzy.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/model/dish/widgets/ingredient_wrapper.dart';
 import 'package:get_that_bread/model/ingredient/ingredient.dart';
+import 'package:get_that_bread/model/meal/meal.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
 import 'package:get_that_bread/model/menu/widgets/dish_wrapper.dart';
 import 'package:get_that_bread/services/persistence_service/persistence_service.dart';

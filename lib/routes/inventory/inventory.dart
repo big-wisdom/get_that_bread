@@ -10,7 +10,7 @@ class Inventory extends StatelessWidget {
     DataService dataService = Provider.of<DataService>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Inventory"),
+        title: Text("Take Inventory"),
       ),
       body: ListView.builder(
         itemCount: dataService.inventory.length,
@@ -19,6 +19,10 @@ class Inventory extends StatelessWidget {
           IngredientWrapper inventoryItem = dataService.inventory[index];
           return InventoryCard(inventoryItem, dataService);
         },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text("Finalize List"),
+        icon: Icon(Icons.check)
       ),
     );
   }

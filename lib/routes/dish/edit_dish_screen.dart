@@ -21,13 +21,13 @@ class _EditDishScreenState extends State<EditDishScreen> {
   TextEditingController _dishNameController;
   TextEditingController _dishDescriptionController;
   Status status;
+
   // make working dish here
   Dish _workingDish = Dish("New Dish", "Probably Delicious");
 
   @override
   void initState() {
     _dishNameController = new TextEditingController();
-    _dishDescriptionController = new TextEditingController();
 
     if (widget._dish == null) {
       status = Status.creating;
@@ -35,7 +35,6 @@ class _EditDishScreenState extends State<EditDishScreen> {
       status = Status.editing;
       _workingDish = widget._dish;
       _dishNameController.text = widget._dish.name;
-      _dishDescriptionController.text = widget._dish.description;
     }
 
     super.initState();
@@ -44,7 +43,6 @@ class _EditDishScreenState extends State<EditDishScreen> {
   @override
   void dispose() {
     _dishNameController.dispose();
-    _dishDescriptionController.dispose();
     super.dispose();
   }
 
@@ -54,17 +52,11 @@ class _EditDishScreenState extends State<EditDishScreen> {
     });
   }
 
-  void _updateDescription(String str) {
-    setState(() {
-      _dishDescriptionController.text = str;
-    });
-  }
-
   Dish _saveDish(DataService dataService) {
     // set working dish name
     _workingDish.name = _dishNameController.text;
     // set working dish description
-    _workingDish.description = _dishDescriptionController.text;
+    _workingDish.description = "Dish Description";
 
     dataService.updateOrAddDish(_workingDish);
   }
@@ -98,17 +90,6 @@ class _EditDishScreenState extends State<EditDishScreen> {
                   return null;
                 },
               ),
-              TextFormField(
-                controller: _dishDescriptionController,
-                onFieldSubmitted: _updateDescription,
-                decoration: InputDecoration(labelText: 'Description'),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter a description for your dish.';
-                  }
-                  return null;
-                },
-              ),
               Padding(
                 padding: EdgeInsets.only(top: 32.0, bottom: 16.0),
                 child: Text("Ingredients", style: TextStyle(fontSize: 24.0)),
@@ -130,6 +111,8 @@ class _EditDishScreenState extends State<EditDishScreen> {
                   )
                   .toList(),
               FlatButton.icon(
+                label: Text("Add Ingredient"),
+                icon: Icon(Icons.add),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -139,24 +122,20 @@ class _EditDishScreenState extends State<EditDishScreen> {
                     ),
                   );
                 },
-                icon: Icon(Icons.add),
-                label: Text("Add Ingredient"),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 48.0),
-                child: RaisedButton(
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      Navigator.pop(context);
-                      _saveDish(dataService);
-                    }
-                  },
-                  child: Text('Save Dish'),
-                ),
               ),
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text("Save Dish"),
+        icon: Icon(Icons.save),
+        onPressed: () {
+          if (_formKey.currentState.validate()) {
+            Navigator.pop(context);
+            _saveDish(dataService);
+          }
+        },
       ),
     );
   }
