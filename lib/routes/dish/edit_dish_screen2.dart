@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get_that_bread/model/dish/dish.dart';
 import 'package:get_that_bread/routes/ingredients/search_ingredients_screen.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
@@ -89,14 +90,15 @@ class _EditDishScreen2State extends State<EditDishScreen2> {
             ),
             SliverFixedExtentList(
               itemExtent: 50.0,
-              delegate:
-                  SliverChildBuilderDelegate((BuildContext context, int index) {
-                return Container(
-                  alignment: Alignment.center,
-                  color: Colors.lightBlue[100 * (index % 9)],
-                  child: Text('List Item $index'),
-                );
-              }),
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return Container(
+                    alignment: Alignment.center,
+                    color: Colors.lightBlue[100 * (index % 9)],
+                    child: Text('List Item $index'),
+                  );
+                },
+              ),
             )
             // Image.asset('images/meal.png'),
             // TextFormField(
