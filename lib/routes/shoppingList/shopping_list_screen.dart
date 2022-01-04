@@ -3,6 +3,7 @@ import 'package:get_that_bread/model/dish/widgets/ingredient_wrapper.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
 import 'package:get_that_bread/model/menu/widgets/dish_wrapper.dart';
 import 'package:get_that_bread/routes/inventory/inventory.dart';
+import 'package:get_that_bread/routes/shoppingList/item_bar.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
 import 'package:get_that_bread/widgets/counter.dart';
 import 'package:provider/provider.dart';
@@ -57,21 +58,14 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
               ),
       ),
       body: ListView.builder(
-          padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 100.0),
-          shrinkWrap: true,
-          itemCount: dataService.shoppingList.length,
-          itemBuilder: (context, index) {
-            IngredientWrapper ingredientWrapper =
-                dataService.shoppingList[index];
-            return Card(
-              child: ListTile(
-                title: Text(ingredientWrapper.ingredient.toString()),
-                trailing: Text(
-                  "${ingredientWrapper.count} ${ingredientWrapper.ingredient.unit}",
-                ),
-              ),
-            );
-          }),
+        padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 100.0),
+        shrinkWrap: true,
+        itemCount: dataService.shoppingList.length,
+        itemBuilder: (context, index) {
+          IngredientWrapper ingredientWrapper = dataService.shoppingList[index];
+          return ItemBar(ingredientWrapper);
+        },
+      ),
       floatingActionButton: FloatingActionButton.extended(
         label: Text("Go Shopping"),
         icon: Icon(Icons.shopping_cart),

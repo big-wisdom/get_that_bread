@@ -47,7 +47,7 @@ class _MenuState extends State<MenusScreen> {
                 headerBuilder: (BuildContext context, bool isExpanded) {
                   return ListTile(
                     leading: PopupMenuButton(
-                      captureInheritedThemes: false,
+                      // captureInheritedThemes: false,
                       onSelected: (selection) {
                         if (selection == 0) {
                           Navigator.of(context).push(

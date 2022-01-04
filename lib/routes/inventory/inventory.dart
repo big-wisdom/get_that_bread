@@ -8,6 +8,7 @@ class Inventory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DataService dataService = Provider.of<DataService>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Inventory"),

@@ -14,9 +14,10 @@ class DataService extends ChangeNotifier {
   List<Menu> menus = [];
   List<Dish> dishes = [];
   List<Ingredient> ingredients = [];
-  List<IngredientWrapper> shoppingList = [];
-  List<IngredientWrapper> needed = [];
-  List<IngredientWrapper> inventory = [];
+  List<IngredientWrapper> shoppingList = []; // needed - inventory
+  List<IngredientWrapper> checkedOff = []; // checked off the shopping list
+  List<IngredientWrapper> needed = []; // list populated from the menu
+  List<IngredientWrapper> inventory = []; // what you have at home
   Menu selectedMenu;
 
   DataService() {
@@ -31,6 +32,7 @@ class DataService extends ChangeNotifier {
     needed = [];
     inventory = [];
     shoppingList = [];
+    checkedOff = [];
     for (DishWrapper dishWrapper in menu.dishes) {
       for (IngredientWrapper iw in dishWrapper.dish.ingredients) {
         // if needed already has it, then just combine the count, don't do anything to inventory
@@ -39,14 +41,17 @@ class DataService extends ChangeNotifier {
         } else {
           // otherwise add it to needed and inventory(with count 0 for inventory)
           int amountNeeded = dishWrapper.count * iw.count;
-          needed.add(IngredientWrapper(
-              ingredient: iw.ingredient, count: amountNeeded));
+          needed.add(
+            IngredientWrapper(
+                ingredient: iw.ingredient, count: amountNeeded, checked: false),
+          );
 
           print("Adding ${iw.ingredient} to inventory");
           inventory.add(
             IngredientWrapper(
               ingredient: iw.ingredient,
               count: 0,
+              checked: false,
             ),
           );
         }
@@ -57,6 +62,7 @@ class DataService extends ChangeNotifier {
   }
 
   void calculateShoppingList() {
+    print("calculating Shopping list");
     shoppingList = [];
     for (IngredientWrapper need in needed) {
       IngredientWrapper inventoryItem =
@@ -68,9 +74,7 @@ class DataService extends ChangeNotifier {
       int numberNeeded = need.count - inventoryItem.count;
       shoppingList.add(
         IngredientWrapper(
-          ingredient: need.ingredient,
-          count: numberNeeded,
-        ),
+            ingredient: need.ingredient, count: numberNeeded, checked: false),
       );
     }
   }
@@ -82,6 +86,15 @@ class DataService extends ChangeNotifier {
   void clearShoppingList() async {
     shoppingList = [];
     await _persistenceService.encodeShoppingList(shoppingList);
+    notifyListeners();
+  }
+
+  // move item from shopping list to checkedOff
+  void checkIngredientOff(IngredientWrapper iw) {
+    // remove item from needed list
+    needed.remove(iw);
+    // add it to checked off
+    checkedOff.add(iw);
     notifyListeners();
   }
 
