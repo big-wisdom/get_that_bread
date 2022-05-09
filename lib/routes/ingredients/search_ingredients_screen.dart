@@ -19,9 +19,12 @@ class SearchIngredientsScreen extends StatefulWidget {
 class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
   List<Ingredient> _ingredients;
   List<Ingredient> _selectedIngredients;
+  TextEditingController searchController;
 
   @override
   void initState() {
+    searchController = TextEditingController();
+
     _ingredients = [];
 
     _selectedIngredients =
@@ -58,7 +61,7 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
   @override
   Widget build(BuildContext context) {
     DataService dataService = Provider.of<DataService>(context);
-    _ingredients = dataService.ingredients;
+    search(dataService.ingredients);
 
     return Scaffold(
       appBar: AppBar(
@@ -71,6 +74,8 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
             Padding(
               padding: EdgeInsets.all(16.0),
               child: TextField(
+                controller: searchController,
+                onChanged: (_) => search(dataService.ingredients),
                 decoration: InputDecoration(
                   hintText: ("Search here fool"),
                   border: OutlineInputBorder(
@@ -132,5 +137,20 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
         ),
       ),
     );
+  }
+
+  void search(List<Ingredient> ingredients) {
+    print("Search Text: " + searchController.text);
+    if (searchController.text != "") {
+      setState(() {
+        _ingredients = ingredients
+            .where((element) => element.name.contains(searchController.text))
+            .toList();
+      });
+    } else {
+      setState(() {
+        _ingredients = ingredients;
+      });
+    }
   }
 }
