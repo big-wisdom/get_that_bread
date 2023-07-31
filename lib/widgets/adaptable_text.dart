@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AdaptableText extends StatelessWidget {
   final String text;
-  final TextStyle style;
+  final TextStyle? style;
   final TextAlign textAlign;
   final TextDirection textDirection;
   final double minimumFontScale;
@@ -13,7 +13,7 @@ class AdaptableText extends StatelessWidget {
       this.textDirection = TextDirection.ltr,
       this.minimumFontScale = 0.5,
       this.textOverflow = TextOverflow.ellipsis,
-      Key key})
+      Key? key})
       : super(key: key);
 
   @override

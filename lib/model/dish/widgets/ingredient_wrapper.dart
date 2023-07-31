@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:get_that_bread/model/ingredient/ingredient.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'ingredient_wrapper.g.dart';
@@ -14,9 +13,9 @@ class IngredientWrapper {
   bool checked;
 
   IngredientWrapper({
-    @required this.ingredient,
-    @required this.count,
-    @required this.checked,
+    required this.ingredient,
+    required this.count,
+    this.checked = false,
   });
 
   bool operator ==(o) =>

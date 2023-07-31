@@ -31,10 +31,10 @@ class _HomeState extends State<Home> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
-            title: Text("Menus"),
+            label: "Menus",
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.list), title: Text("Shopping List"))
+              icon: Icon(Icons.list), label: "Shopping List")
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

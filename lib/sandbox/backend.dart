@@ -11,9 +11,7 @@ main() {
 abstract class FoodTest {
   String name;
   String id;
-  FoodTest(this.name) {
-    id = Uuid().v1();
-  }
+  FoodTest(this.name) : id = Uuid().v1();
 }
 
 @JsonSerializable()

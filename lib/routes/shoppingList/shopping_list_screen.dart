@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_that_bread/model/dish/widgets/ingredient_wrapper.dart';
 import 'package:get_that_bread/model/menu/menu.dart';
-import 'package:get_that_bread/model/menu/widgets/dish_wrapper.dart';
 import 'package:get_that_bread/routes/inventory/inventory.dart';
 import 'package:get_that_bread/routes/shoppingList/item_bar.dart';
 import 'package:get_that_bread/services/data_service/data_service.dart';
-import 'package:get_that_bread/widgets/counter.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingListScreen extends StatefulWidget {
@@ -14,7 +12,7 @@ class ShoppingListScreen extends StatefulWidget {
 }
 
 class _ShoppingListScreenState extends State<ShoppingListScreen> {
-  Menu selectedMenu;
+  late Menu? selectedMenu;
 
   void _menuChange(Menu menu, DataService dataService) {
     selectedMenu = menu;
@@ -53,7 +51,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
                     )
                     .toList(),
                 onChanged: (menu) {
-                  setState(() => _menuChange(menu, dataService));
+                  setState(() => _menuChange(menu! as Menu, dataService));
                 },
               ),
       ),
@@ -74,7 +72,9 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
             context,
             MaterialPageRoute(builder: (context) => Inventory()),
           );
-          dataService.goShopping(selectedMenu);
+          if (selectedMenu != null) {
+            dataService.goShopping(selectedMenu!);
+          }
         },
       ),
     );

@@ -12,10 +12,10 @@ enum Status { creating, editing }
 
 class _EditIngredientsScreenState extends State<EditIngredientsScreen> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _ingredientNameController;
-  TextEditingController _ingredientUnitController;
+  late TextEditingController _ingredientNameController;
+  late TextEditingController _ingredientUnitController;
 
-  Status status;
+  late Status status;
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _EditIngredientsScreenState extends State<EditIngredientsScreen> {
                   controller: _ingredientNameController,
                   decoration: InputDecoration(labelText: 'Ingredient Name'),
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value != null && value.isEmpty) {
                       return 'Please enter a ingredient name';
                     }
                     return null;
@@ -57,7 +57,7 @@ class _EditIngredientsScreenState extends State<EditIngredientsScreen> {
                   decoration:
                       InputDecoration(labelText: 'Ingredient Unit of Purchase'),
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value != null && value.isEmpty) {
                       return 'Enter the unit you purchase this item in';
                     }
                     return null;
@@ -66,9 +66,9 @@ class _EditIngredientsScreenState extends State<EditIngredientsScreen> {
               ),
               Padding(
                 padding: EdgeInsets.all(16.0),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: () {
-                    if (_formKey.currentState.validate()) {
+                    if (_formKey.currentState!.validate()) {
                       Navigator.pop(context);
                       dataService.addIngredient(
                         Ingredient(

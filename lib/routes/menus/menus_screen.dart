@@ -8,7 +8,7 @@ import 'package:get_that_bread/widgets/counter.dart';
 import 'package:provider/provider.dart';
 
 class MenusScreen extends StatefulWidget {
-  MenusScreen({Key key}) : super(key: key);
+  MenusScreen({Key? key}) : super(key: key);
 
   @override
   _MenuState createState() => _MenuState();
@@ -27,8 +27,6 @@ class _MenuState extends State<MenusScreen> {
       },
     );
   }
-
-  void _printDishCounter(int count) {}
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +106,7 @@ class _MenuState extends State<MenusScreen> {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => new EditMenuScreen(),
+              builder: (context) => new EditMenuScreen(null),
             ),
           );
         },

@@ -5,9 +5,9 @@ import 'package:get_that_bread/routes/dish/edit_dish_screen.dart';
 class DishCard extends StatelessWidget {
   final Dish _dish;
 
-  DishCard([
-    this._dish,
-  ]);
+  DishCard(
+    Dish dish,
+  ) : _dish = dish;
 
   @override
   Widget build(BuildContext context) {

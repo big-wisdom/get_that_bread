@@ -18,13 +18,13 @@ class DataService extends ChangeNotifier {
   List<IngredientWrapper> checkedOff = []; // checked off the shopping list
   List<IngredientWrapper> needed = []; // list populated from the menu
   List<IngredientWrapper> inventory = []; // what you have at home
-  Menu selectedMenu;
+  Menu? selectedMenu;
 
   DataService() {
     _loadEverything();
   }
 
-  void goShopping(Menu menu) {
+  void goShopping(Menu? menu) {
     if (menu == null) return;
     // clear shopping list, inventory, and needed (let shopping list page repopulate itself)
     // populate needed and inventory(all set to 0) from the menu
@@ -248,6 +248,7 @@ class DataService extends ChangeNotifier {
           WeightedKey(
               name: "name",
               getter: (dish) {
+                dish as Dish;
                 return dish.name;
               },
               weight: 1)
@@ -271,6 +272,7 @@ class DataService extends ChangeNotifier {
           WeightedKey(
               name: "name",
               getter: (ingredient) {
+                ingredient as Ingredient;
                 return ingredient.name;
               },
               weight: 1)

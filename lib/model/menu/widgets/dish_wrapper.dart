@@ -11,5 +11,8 @@ class DishWrapper {
 
   Dish dish;
   int count;
-  DishWrapper({this.dish, this.count});
+  DishWrapper({
+    required this.dish,
+    required this.count,
+  });
 }

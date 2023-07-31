@@ -8,9 +8,9 @@ import 'package:get_that_bread/services/data_service/data_service.dart';
 import 'package:provider/provider.dart';
 
 class EditMenuScreen extends StatefulWidget {
-  final Menu _menu;
+  final Menu? _menu;
 
-  EditMenuScreen([this._menu]);
+  EditMenuScreen(Menu? menu) : _menu = menu;
 
   @override
   _EditMenusScreenState createState() => _EditMenusScreenState();
@@ -20,10 +20,10 @@ enum Status { creating, editing }
 
 class _EditMenusScreenState extends State<EditMenuScreen> {
   final _formKey = GlobalKey<FormState>();
-  List<Dish> _dishes;
-  List<Dish> _selectedDishes;
-  TextEditingController _menuNameController;
-  Status status;
+  late List<Dish> _dishes;
+  late List<Dish> _selectedDishes;
+  late TextEditingController _menuNameController;
+  late Status status;
 
   @override
   void initState() {
@@ -35,8 +35,8 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
     } else {
       status = Status.editing;
       _selectedDishes =
-          widget._menu.dishes.map((wrapper) => wrapper.dish).toList();
-      _menuNameController.text = widget._menu.name;
+          widget._menu!.dishes.map((wrapper) => wrapper.dish).toList();
+      _menuNameController.text = widget._menu!.name;
     }
 
     super.initState();
@@ -85,11 +85,11 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
   }
 
   void _editMenu() {
-    widget._menu.name = _menuNameController.text; // edit name
-    widget._menu.dishes = _selectedDishes.map(
+    widget._menu!.name = _menuNameController.text; // edit name
+    widget._menu!.dishes = _selectedDishes.map(
       (dish) {
         // edit dishes
-        return widget._menu.dishes.firstWhere(
+        return widget._menu!.dishes.firstWhere(
             (existingDish) => existingDish.dish == dish,
             orElse: () => DishWrapper(
                 dish: dish, count: 1)); // check if dish already existed
@@ -118,7 +118,7 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
                 onFieldSubmitted: _updateName,
                 decoration: InputDecoration(labelText: 'Menu Name'),
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value != null && value.isEmpty) {
                     return 'Please enter a menu name';
                   }
                   return null;
@@ -176,7 +176,7 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
             ),
             Padding(
               padding: EdgeInsets.all(16.0),
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -188,9 +188,9 @@ class _EditMenusScreenState extends State<EditMenuScreen> {
             ),
             Padding(
               padding: EdgeInsets.all(16.0),
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState.validate()) {
+                  if (_formKey.currentState!.validate()) {
                     Navigator.pop(context);
                     _saveMenu(dataService);
                   }

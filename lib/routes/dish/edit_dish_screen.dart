@@ -6,7 +6,7 @@ import 'package:get_that_bread/widgets/counter.dart';
 import 'package:provider/provider.dart';
 
 class EditDishScreen extends StatefulWidget {
-  final Dish _dish;
+  final Dish? _dish;
 
   EditDishScreen([this._dish]);
 
@@ -18,9 +18,9 @@ enum Status { creating, editing }
 
 class _EditDishScreenState extends State<EditDishScreen> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _dishNameController;
-  TextEditingController _dishDescriptionController;
-  Status status;
+  late TextEditingController _dishNameController;
+  late TextEditingController _dishDescriptionController;
+  late Status status;
   // make working dish here
   Dish _workingDish = Dish("New Dish", "Probably Delicious");
 
@@ -33,9 +33,9 @@ class _EditDishScreenState extends State<EditDishScreen> {
       status = Status.creating;
     } else {
       status = Status.editing;
-      _workingDish = widget._dish;
-      _dishNameController.text = widget._dish.name;
-      _dishDescriptionController.text = widget._dish.description;
+      _workingDish = widget._dish!;
+      _dishNameController.text = widget._dish!.name;
+      _dishDescriptionController.text = widget._dish!.description;
     }
 
     super.initState();
@@ -60,7 +60,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
     });
   }
 
-  Dish _saveDish(DataService dataService) {
+  void _saveDish(DataService dataService) {
     // set working dish name
     _workingDish.name = _dishNameController.text;
     // set working dish description
@@ -92,7 +92,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
                 onFieldSubmitted: _updateName,
                 decoration: InputDecoration(labelText: 'Dish Name'),
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value != null && value.isEmpty) {
                     return 'Please enter a dish name';
                   }
                   return null;
@@ -103,7 +103,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
                 onFieldSubmitted: _updateDescription,
                 decoration: InputDecoration(labelText: 'Description'),
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value != null && value.isEmpty) {
                     return 'Please enter a description for your dish.';
                   }
                   return null;
@@ -129,7 +129,7 @@ class _EditDishScreenState extends State<EditDishScreen> {
                     ),
                   )
                   .toList(),
-              FlatButton.icon(
+              ElevatedButton.icon(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -144,9 +144,9 @@ class _EditDishScreenState extends State<EditDishScreen> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 48.0),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: () {
-                    if (_formKey.currentState.validate()) {
+                    if (_formKey.currentState!.validate()) {
                       Navigator.pop(context);
                       _saveDish(dataService);
                     }

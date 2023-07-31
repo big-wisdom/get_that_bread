@@ -5,7 +5,10 @@ part 'ingredient.g.dart';
 
 @JsonSerializable()
 class Ingredient extends Food {
-  Ingredient({String name, this.unit}) : super(name);
+  Ingredient({
+    required String name,
+    required this.unit,
+  }) : super(name);
   String unit;
 
   factory Ingredient.fromJson(Map<String, dynamic> json) =>

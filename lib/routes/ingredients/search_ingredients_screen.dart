@@ -17,9 +17,9 @@ class SearchIngredientsScreen extends StatefulWidget {
 }
 
 class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
-  List<Ingredient> _ingredients;
-  List<Ingredient> _selectedIngredients;
-  TextEditingController searchController;
+  late List<Ingredient> _ingredients;
+  late List<Ingredient> _selectedIngredients;
+  late TextEditingController searchController;
 
   @override
   void initState() {
@@ -113,7 +113,7 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
             ButtonBar(
               alignment: MainAxisAlignment.center,
               children: [
-                RaisedButton.icon(
+                ElevatedButton.icon(
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -124,7 +124,7 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
                   label: Text("Add Ingredient"),
                   icon: Icon(Icons.add),
                 ),
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () {
                     _saveIngredients(dataService);
                     Navigator.pop(context);
