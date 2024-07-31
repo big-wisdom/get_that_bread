@@ -144,7 +144,11 @@ class _SearchIngredientsScreenState extends State<SearchIngredientsScreen> {
     if (searchController.text != "") {
       setState(() {
         _ingredients = ingredients
-            .where((element) => element.name.contains(searchController.text))
+            .where(
+              (element) => element.name.toLowerCase().contains(
+                    searchController.text.toLowerCase(),
+                  ),
+            )
             .toList();
       });
     } else {
